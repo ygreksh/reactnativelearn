@@ -10,7 +10,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "formik": "^2.2.9",
     "react": "17.0.2",
+    "react-hook-form": "^7.27.1",
     "react-native": "0.67.3"
   },
   "devDependencies": {
