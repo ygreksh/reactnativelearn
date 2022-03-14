@@ -1,0 +1,28 @@
+login
+http://online.polbox.tv/api/json/login?login=12390119&pass=785206&device=apple&settings=all
+
+{"error":{"code":4,"message":"Login incorrect"},"servertime":1647007260}
+
+{"sid":"GJXV53H0K0IWY1SWJXVE77DX0LCKZWP6","sid_name":"MWARE_SSID","account":{"login":"12390119","packet_name":"POLBOX-PREMIUM","packet_id":"157","packet_expire":1671357478},"services":{"vod":1,"archive":1},"ktv_dune_data_url":"http:\/\/online.polbox.tv\/dune\/polbox\/","messages":0,"settings":{"timeshift":{"value":"0","list":[0,1,2,3,6,7,8,9,10,11,12]},"timezone":{"value":"0"},"http_caching":{"value":"1500","list":[1500,3000,5000,8000,15000]},"stream_server":{"value":"192.168.3.13","list":[{"ip":"192.168.1.13","descr":"Europe"},{"ip":"192.168.3.13","descr":"USA-1"},{"ip":"192.168.4.13","descr":"USA-2"}]},"bitrate":{"value":"1500","list":["1500","900"],"names":[{"val":"1500","title":"Standard"},{"val":"900","title":"Eco"}]}},"geo":{"country_id":1,"region":{"id":1,"name":"Europe"},"ip":"91.221.99.229"},"servertime":1647006882}
+
+https://online.polbox.tv/api/json/login?login=12390119&pass=785206
+
+{"sid":"37WSOBAHJ168SVVOIZU2AU3PQ6JA0M8U","sid_name":"MWARE_SSID","account":{"login":"12390119","packet_name":"POLBOX-PREMIUM","packet_id":"157","packet_expire":1671357478},"services":{"vod":1,"archive":1},"ktv_dune_data_url":"http:\/\/online.polbox.tv\/dune\/polbox\/","messages":0,"servertime":1647008684}
+
+=================================================================================
+
+logout
+https:/online.polbox.tv/api/json/logout?MWARE_SSID=GJXV53H0K0IWY1SWJXVE77DX0LCKZWP6
+
+{"error":{"code":11,"message":"Another client with you login was logged"},"servertime":1647007172}
+
+{"servertime":1647007157}
+
+
+==============================================================
+
+
+http://online.polbox.tv/api/json/vod_favlist?MWARE_SSID=GJXV53H0K0IWY1SWJXVE77DX0LCKZWP6&nums=20
+
+http://online.polbox.tv/api/json/vod_list?MWARE_SSID=GJXV53H0K0IWY1SWJXVE77DX0LCKZWP6&genreslast=1&nums=20
+http://online.polbox.tv/api/json/vod_list?MWARE_SSID=NTG2MK1EZMVV1DGXCIPCABYXTPKYFSIT&genre=15&page=1&nums=20&type=last
