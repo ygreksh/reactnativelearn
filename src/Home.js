@@ -25,7 +25,7 @@ const Home = ({navigation}) => {
               console.log('channel_list from API : ', json);
               setGroups(json.groups);
               setIsLoaded(true);
-              console.log('channel_list from inner value groups: ', groups);
+              // console.log('channel_list from inner value groups: ', groups);
             }
               
             });

@@ -27,7 +27,7 @@ const Login = ({navigation}) => {
     let username = user.login;
     let password = user.password;
 
-    let url = baseUrl + "login?login=" + username + "&" + "pass=" + password;
+    let url = baseUrl + "login?login=" + username + "&" + "pass=" + password + "&softid=apple";
     console.log(user);
     console.log(url);
     fetch(url, {method:'GET'})

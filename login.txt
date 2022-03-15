@@ -28,6 +28,13 @@ http://online.polbox.tv/api/json/vod_list?MWARE_SSID=GJXV53H0K0IWY1SWJXVE77DX0LC
 http://online.polbox.tv/api/json/vod_list?MWARE_SSID=NTG2MK1EZMVV1DGXCIPCABYXTPKYFSIT&genre=15&page=1&nums=20&type=last
 
 ==========================================================================================================
+Channel JSON:  {"url":"http/ts://185.142.134.15:3060/V9F6K37QQEU1O6JDGVXABHUG2OUKQ5MC-L3RtcDIvZm9rdXN0di1zdA==-10798597619-28fb832ae7b80308367de6b49516b54b/str1/stream :http-caching=1500 :network-caching=1500 :no-http-reconnect","servertime":1647352484}
+
+http/ts://185.142.134.15:3060/V9F6K37QQEU1O6JDGVXABHUG2OUKQ5MC-L3RtcDIvZm9rdXN0di1zdA==-10798597619-28fb832ae7b80308367de6b49516b54b/str1/stream :http-caching=1500 :network-caching=1500 :no-http-reconnect
+
+
+
+==========================================================================================================
 https://online.polbox.tv/api/json/channel_list?MWARE_SSID=LTGXOVI6NOFPQZ0G8II95JDP5IAQFO3Q
 
 

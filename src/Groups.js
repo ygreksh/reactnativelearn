@@ -3,7 +3,7 @@ import { Text, View, FlatList, StyleSheet } from "react-native";
 import Channels from "./Channels";
 
 const Groups = ({groups}) => {
-    const renderItem = ({item}) => <Channels channels={item.channels}/>
+    const renderItem = ({item}) => <Channels channels={item}/>
 
     return(
         <View>
@@ -14,6 +14,7 @@ const Groups = ({groups}) => {
                 data={groups}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
+                
             />
             <Text>End of groups</Text>
         </View>
