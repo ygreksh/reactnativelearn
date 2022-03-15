@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Button, Text, View, StyleSheet } from "react-native";
+import Groups from "./Groups";
 import useStore from './store'
 
 
@@ -8,8 +9,27 @@ import useStore from './store'
 const Home = ({navigation}) => {
     let baseUrl = 'https://online.polbox.tv/api/json/';
 
+    const [isLoaded, setIsLoaded] = useState(false);
+
     const sid = useStore(state => state.sid);
     const resetSid = useStore(state => state.resetSid);
+
+    const [groups, setGroups] = useState();
+
+    useEffect(() => {
+      let url = baseUrl + "channel_list?" + "MWARE_SSID=" + sid; 
+      fetch(url, {method:'GET'})
+          .then(response => response.json())
+          .then(json => {
+            if(!isLoaded) {
+              console.log('channel_list from API : ', json);
+              setGroups(json.groups);
+              setIsLoaded(true);
+              console.log('channel_list from inner value groups: ', groups);
+            }
+              
+            });
+    });
 
     const logoutFunc = () => {
 
@@ -52,10 +72,7 @@ const Home = ({navigation}) => {
                 title="Logout" 
                 style={styles.button}
                 onPress={logoutFunc} />
-            <Button 
-                title="Account" 
-                style={styles.button}
-                onPress={getAccount} />
+            <Groups groups={groups}/>
         </View>
     )
 }

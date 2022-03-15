@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 // import { State } from "zustand";
@@ -9,8 +9,6 @@ const Login = ({navigation}) => {
     const setSid = useStore(state => state.setSid);
 
 
-  const [userAccount, setUserAccount] = useState();
-  const [userSid, setUserSid] = useState();
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       login: '',
@@ -97,7 +95,7 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
     height: 40,
-    width: 300,
+    width: 200,
   },
   input: {
     height: 40,
