@@ -25,7 +25,6 @@ const TVScreen = ({navigation}) => {
               console.log('channel_list from API : ', json);
               setGroups(json.groups);
               setIsLoaded(true);
-              // console.log('channel_list from inner value groups: ', groups);
             }
               
             });
@@ -46,22 +45,22 @@ const TVScreen = ({navigation}) => {
         }
       }
     
-      const getAccount = () => {
-        let url = baseUrl + "account";
-        let headers = new Headers();
-        if (sid) {
-            console.log('sid now', sid);
-            headers.append('Cookie', sid);
-          fetch(url, {method:'GET',
-                    headers: headers,})
-          .then(response => response.json())
-          .then(json => {
-              console.log('GET ACCOUNT: ', json);
-              alert(JSON.stringify(json));
-              });
-          }
+      // const getAccount = () => {
+      //   let url = baseUrl + "account";
+      //   let headers = new Headers();
+      //   if (sid) {
+      //       console.log('sid now', sid);
+      //       headers.append('Cookie', sid);
+      //     fetch(url, {method:'GET',
+      //               headers: headers,})
+      //     .then(response => response.json())
+      //     .then(json => {
+      //         console.log('GET ACCOUNT: ', json);
+      //         alert(JSON.stringify(json));
+      //         });
+      //     }
     
-      }
+      // }
 
     return (
         <View>

@@ -21,6 +21,8 @@ https:/online.polbox.tv/api/json/logout?MWARE_SSID=GJXV53H0K0IWY1SWJXVE77DX0LCKZ
 
 ==============================================================
 
+Genres_list from API :  {"genres": [{"id": "15", "name": "Animowany"}, {"id": "10", "name": "Biograficzny"}, {"id": "27", "name": "Dokumentalny"}, {"id": "8", "name": "Dramat"}, {"id": "30", "name": "Familijny"}, {"id": "24", "name": "Fantastyczny"}, {"id": "16", "name": "Historyczny"}, {"id": "20", "name": "Horror"}, {"id": "25", "name": "Kino Akcji"}, {"id": "4", "name": "Komedia"}, {"id": "31", "name": "Kryminalny"}, {"id": "5", "name": "Melodramat"}, {"id": "17", "name": "Muzyczny"}, {"id": "19", "name": "Przygodowy"}, {"id": "6", "name": "Serial"}, {"id": "11", "name": "Sportowy"}, {"id": "9", "name": "Thriller"}, {"id": "23", "name": "Western"}, {"id": "22", "name": "Wojenny"}], "servertime": 1647438121}
+==========================================================================================
 
 http://online.polbox.tv/api/json/vod_favlist?MWARE_SSID=GJXV53H0K0IWY1SWJXVE77DX0LCKZWP6&nums=20
 
