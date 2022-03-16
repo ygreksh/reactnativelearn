@@ -12,7 +12,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Home" component={Home} 
+          options={{
+          title: 'My home',
+          headerStyle: {
+            backgroundColor: '#dd0000',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Player" component={Player} />
       </Stack.Navigator>
