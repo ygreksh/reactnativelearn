@@ -14,9 +14,7 @@ const Groups = ({groups}) => {
                 data={groups}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
-                
             />
-            <Text>End of groups</Text>
         </View>
     )
 }
