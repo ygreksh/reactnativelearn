@@ -9,7 +9,7 @@ import VODItem from "./VODItem";
 
 
 const VODScreen = ({navigation}) => {
-    let baseUrl = 'https://online.polbox.tv/api/json/';
+    let baseUrl = 'http://online.polbox.tv/api/json/';
 
     const [isGenresLoaded, setIsGenresLoaded] = useState(false);
     const [isVODLoaded, setIsVODLoaded] = useState(false);
@@ -17,7 +17,7 @@ const VODScreen = ({navigation}) => {
     const sid = useStore(state => state.sid);
 
     const [genres, setGenres] = useState({genres: []});
-    const [vodList, setVODList] = useState({rows:[{id:"000", name: "empty", poster: "https://icons.veryicon.com/png/o/internet--web/industrial-icon/empty-18.png"}]});
+    const [vodList, setVODList] = useState({rows:[{id:"000", name: "empty", poster: ""}]});
 
     let genresUrl = baseUrl + "vod_genres?" + "MWARE_SSID=" + sid; 
       fetch(genresUrl, {method:'GET'})
@@ -31,7 +31,7 @@ const VODScreen = ({navigation}) => {
               
             });
 
-    let vodUrl = baseUrl + "vod_list?" + "MWARE_SSID=" + sid + "&nums=10"; 
+    let vodUrl = baseUrl + "vod_list?" + "MWARE_SSID=" + sid + "&nums=30"; 
             fetch(vodUrl, {method:'GET'})
                 .then(response => response.json())
                 .then(json => {
@@ -43,7 +43,7 @@ const VODScreen = ({navigation}) => {
                   });
       
     const renderGenreItem = ({item}) => <VODGenre name={item.name}/>
-    const renderVODItem = ({item}) => <VODItem vodInfo={item}/>
+    const renderVODItem = ({item}) => <VODItem vodItem={item}/>
 
     // const TEST_DATA = [
     //     {id: "15", name: "Animowany"},
