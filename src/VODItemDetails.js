@@ -4,12 +4,13 @@ import { useNavigation } from "@react-navigation/native";
 import useStore from './store';
 
 
-const VODItem = ({vodInfo}) => {
+const VODItemDetails = ({route}) => {
+    const {vodInfo} = route.params;
     const navigation = useNavigation();
     const sid = useStore(state => state.sid);
 
     async function handleOnPress () {
-        console.log("Details : " + vodInfo.name);
+        console.log("Film : " + vodInfo.name);
 
         // const video = {};
         // let videoUrl = "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_2MB.mp4";
@@ -30,25 +31,22 @@ const VODItem = ({vodInfo}) => {
         //                 url: videoUrl
         //             });
         //           });
-        navigation.navigate("VODItemDetails", {vodInfo: vodInfo})
 
     }
 
     return(
         <View style={{padding: 5, alignItems: "center"}}
             >
-                <TouchableOpacity onPress={handleOnPress}>
-                    <Image
-                        style={{width: 60, height: 60}}
-                        source={{uri: 'http://online.polbox.tv/' + vodInfo.poster}}
-                    />
-                    <Text >
-                        {vodInfo.name}
-                    </Text>    
-                </TouchableOpacity>
+            <Image
+                style={{width: 200, height: 200}}
+                source={{uri: 'http://online.polbox.tv/' + vodInfo.poster}}
+            />
+            <Text >
+                {vodInfo.name}
+            </Text>    
             
         </View>
     )
 }
 
-export default VODItem;
+export default VODItemDetails;

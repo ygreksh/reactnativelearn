@@ -24,7 +24,7 @@ const VODScreen = ({navigation}) => {
           .then(response => response.json())
           .then(json => {
             if(!isGenresLoaded) {
-              console.log('Genres_list from API : ', json);
+              // console.log('Genres_list from API : ', json);
               setGenres(json);
               setIsGenresLoaded(true);
             }
@@ -36,7 +36,7 @@ const VODScreen = ({navigation}) => {
                 .then(response => response.json())
                 .then(json => {
                   if (!isVODLoaded){
-                    console.log('VOD_list from API : ', json);
+                    // console.log('VOD_list from API : ', json);
                     setVODList(json);
                     setIsVODLoaded(true);
                   }
