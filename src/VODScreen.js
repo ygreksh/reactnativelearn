@@ -42,25 +42,31 @@ const VODScreen = ({navigation}) => {
                   }
                   });
       
-    const renderGenreItem = ({item}) => <VODGenre name={item.name}/>
+    // const renderGenreItem = ({item}) => <VODGenre name={item.name}/>
+    // const renderGenreItem = ({item}) => <Text>{item.name}</Text>
+    const renderGenreItem = ({item}) => <View>
+                                          <Text> {item.name}</Text>
+                                          <FlatList 
+                                            // data={[{id: "1", name: "Film 1"},{id: "2", name: "Film 2"},{id: "3", name: "Film 3"},{id: "4", name: "Film 4"}]}
+                                            data={vodList.rows.filter((r) => r.genre_str.toLowerCase().includes(item.name.toLowerCase()))}
+                                            horizontal={true}
+                                            renderItem={(i) => <View><Text> |{i.item.genre_str}| </Text></View>}
+                                            keyExtractor={(i) => i.id}
+                                          />
+                                        </View>
     const renderVODItem = ({item}) => <VODItem vodItem={item}/>
 
-    // const TEST_DATA = [
-    //     {id: "15", name: "Animowany"},
-    //     {id: "10", name: "Biograficzny"},
-    //     {id: "27", name: "Dokumentalny"},
-    //     {id: "8", name: "Dramat" }
-    // ];
+    const TEST_DATA = [
+        {id: "15", name: "Animowany"},
+        {id: "10", name: "Biograficzny"},
+        {id: "27", name: "Dokumentalny"},
+        {id: "8", name: "Dramat" }
+    ];
     return (
         <View>
             <Text>
                 Films
             </Text>
-            {/* <FlatList
-                data={genres.genres}
-                renderItem={renderGenreItem}
-                keyExtractor={(item) => item.id}
-            /> */}
             <FlatList
                 style={{backgroundColor: '#cccccc'}}
                 data={vodList.rows}
@@ -68,6 +74,13 @@ const VODScreen = ({navigation}) => {
                 renderItem={renderVODItem}
                 keyExtractor={(item) => item.id}
             />
+            <FlatList
+                // data={genres.genres}
+                data={TEST_DATA}
+                renderItem={renderGenreItem}
+                keyExtractor={(item) => item.id}
+            />
+            
         </View>
     )
 }

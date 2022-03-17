@@ -26,7 +26,7 @@ const VODItemDetails = ({route}) => {
                     let temp = json.url;
                     let matches = temp.split(' ');
                     let videoUrl = matches[0];
-                    console.log('Channel URL: ', videoUrl);
+                    console.log('film url: ', videoUrl);
                     navigation.navigate("Player", {
                         url: videoUrl
                     });
