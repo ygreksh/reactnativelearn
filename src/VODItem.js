@@ -27,11 +27,11 @@ const VODItem = ({vodItem}) => {
     }
 
     return(
-        <View style={{padding: 5, alignItems: "center"}}
+        <View style={{padding: 5, alignContent: "center", maxWidth: 120}}
             >
                 <TouchableOpacity onPress={handleOnPress}>
                     <Image
-                        style={{width: 60, height: 60}}
+                        style={{width: 80, height: 100}}
                         source={{uri: 'http://online.polbox.tv/' + vodItem.poster}}
                     />
                     <Text >

@@ -31,7 +31,7 @@ const VODScreen = ({navigation}) => {
               
             });
 
-    let vodUrl = baseUrl + "vod_list?" + "MWARE_SSID=" + sid + "&nums=30"; 
+    let vodUrl = baseUrl + "vod_list?" + "MWARE_SSID=" + sid + "&nums=100"; 
             fetch(vodUrl, {method:'GET'})
                 .then(response => response.json())
                 .then(json => {
