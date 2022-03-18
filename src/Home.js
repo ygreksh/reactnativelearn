@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TVScreen from "./TVScreen";
 import VODScreen from "./VODScreen";
 import 'react-native-gesture-handler';
+import Settings from "./Settings";
 
 const Tab = createBottomTabNavigator();
 
@@ -13,6 +14,7 @@ const Home = () => {
       <Tab.Navigator>
         <Tab.Screen name="TV Channels" component={TVScreen} />
         <Tab.Screen name="VOD" component={VODScreen} />
+        <Tab.Screen name="Settings" component={Settings} />
       </Tab.Navigator>
     )
 }
