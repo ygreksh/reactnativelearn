@@ -17,7 +17,7 @@ const VODScreen = ({navigation}) => {
     const sid = useStore(state => state.sid);
 
     const [genres, setGenres] = useState({genres: []});
-    const [vodList, setVODList] = useState({rows:[{id:"000", name: "empty", poster: ""}]});
+    const [vodList, setVODList] = useState({rows:[{id:"0", name: "empty", poster: "", genre_str: ""}]});
 
     let genresUrl = baseUrl + "vod_genres?" + "MWARE_SSID=" + sid; 
       fetch(genresUrl, {method:'GET'})
@@ -47,10 +47,12 @@ const VODScreen = ({navigation}) => {
     const renderGenreItem = ({item}) => <View>
                                           <Text> {item.name}</Text>
                                           <FlatList 
+                                            style={{backgroundColor: '#cccccc'}}
                                             // data={[{id: "1", name: "Film 1"},{id: "2", name: "Film 2"},{id: "3", name: "Film 3"},{id: "4", name: "Film 4"}]}
                                             data={vodList.rows.filter((r) => r.genre_str.toLowerCase().includes(item.name.toLowerCase()))}
                                             horizontal={true}
-                                            renderItem={(i) => <View><Text> |{i.item.genre_str}| </Text></View>}
+                                            // renderItem={(i) => <View><Text> |{i.item.id},{i.item.genre_str}| </Text></View>}
+                                            renderItem={(i) => <VODItem vodItem={i.item}/>}
                                             keyExtractor={(i) => i.id}
                                           />
                                         </View>
@@ -65,7 +67,7 @@ const VODScreen = ({navigation}) => {
     return (
         <View>
             <Text>
-                Films
+                All films
             </Text>
             <FlatList
                 style={{backgroundColor: '#cccccc'}}
@@ -75,8 +77,8 @@ const VODScreen = ({navigation}) => {
                 keyExtractor={(item) => item.id}
             />
             <FlatList
-                // data={genres.genres}
-                data={TEST_DATA}
+                data={genres.genres}
+                // data={TEST_DATA}
                 renderItem={renderGenreItem}
                 keyExtractor={(item) => item.id}
             />
