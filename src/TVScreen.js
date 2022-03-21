@@ -12,7 +12,6 @@ const TVScreen = ({navigation}) => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const sid = useStore(state => state.sid);
-    const resetSid = useStore(state => state.resetSid);
 
     const [groups, setGroups] = useState();
 
@@ -30,21 +29,6 @@ const TVScreen = ({navigation}) => {
             });
     });
 
-    const logoutFunc = () => {
-
-
-        if(sid) {
-          let url = baseUrl + "logout?" + "MWARE_SSID=" + sid;
-          fetch(url, {method:'GET'})
-          .then(response => response.json())
-          .then(json => {
-              console.log('LOGOUT : ', json);
-              resetSid();
-                navigation.navigate('Login');
-            });
-        }
-      }
-    
       // const getAccount = () => {
       //   let url = baseUrl + "account";
       //   let headers = new Headers();
@@ -67,10 +51,6 @@ const TVScreen = ({navigation}) => {
             <Text>
                 Home Screen
             </Text>
-            <Button 
-                title="Logout" 
-                style={styles.button}
-                onPress={logoutFunc} />
             <Groups groups={groups}/>
         </View>
     )

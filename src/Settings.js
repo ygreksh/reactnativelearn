@@ -5,7 +5,14 @@ import { Button, Text, View, StyleSheet } from "react-native";
 const Settings = () => {
  
     return (
-      <Text> Settings Screen </Text>
+      <View>
+        <Text> Settings Screen </Text>
+        <Text> =============== </Text>
+        <Text> Buffering </Text>
+        <Text> Stream server </Text>
+        <Text> Bitrate </Text>
+      </View>
+      
     )
 }
 const styles = StyleSheet.create({
