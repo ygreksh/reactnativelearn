@@ -41,12 +41,12 @@ if(!isLoaded) {fetch(url, {method:'GET',
         <Picker 
             mode="dropdown"
             selectedValue={settings.http_caching.value}
-            onValueChange={(item, value)=>{console.log("Select PickerItem: ", {value})}}>
-          {/* {settings.http_caching.list.map((item, index) => {
-          return (<Picker.Item label={item} value={index} key={index}/>)
-          })} */}
-          <Picker.Item label="One" value="1" />
-          <Picker.Item label="Two" value="2" />
+            onValueChange={(item, value)=>{console.log("Select PickerItem: ", value)}}>
+          {settings.http_caching.list.map((item, index) => {
+          return (<Picker.Item label={item.toString()} value={index} key={index}/>)
+          })}
+          {/* <Picker.Item label="One" value="1" />
+          <Picker.Item label="Two" value="2" /> */}
         </Picker>
         <Text> Stream server {settings.stream_server.value} </Text>
         <Text> Bitrate {settings.bitrate.value} </Text>
