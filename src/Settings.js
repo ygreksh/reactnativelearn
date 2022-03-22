@@ -8,6 +8,9 @@ const Settings = () => {
 
   const sid = useStore(state => state.sid);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [httpCaching, sethttpCaching] = useState(0);
+  const [streamServer, setStreamServer] = useState(0);
+  const [bitRate, setBitRate] = useState(0);
   const [settings, setSettings] = useState({
                                                 http_caching: {value: "0",
                                                           list: [0, 1]},
@@ -30,6 +33,9 @@ if(!isLoaded) {fetch(url, {method:'GET',
                     console.log('Settings JSON: ', JSON.stringify(json));
                     setSettings(json.settings);
                     setIsLoaded(true);
+                    sethttpCaching(settings.http_caching.value);
+                    setStreamServer(settings.stream_server.value);
+                    setBitRate(settings.bitrate.value);
                     console.log("http_list: ", settings.http_caching.list)
                   });
 }
@@ -37,31 +43,40 @@ if(!isLoaded) {fetch(url, {method:'GET',
       <View>
         <Text> Settings Screen </Text>
         <Text> =============== </Text>
-        <Text> Buffering {settings.http_caching.value} </Text>
+        <Text> Buffering {httpCaching} </Text>
         <Picker 
             mode="dropdown"
-            selectedValue={settings.http_caching.value}
-            onValueChange={(itemValue, itemIndex)=>{console.log("Select PickerItem: ", itemValue)}}>
+            selectedValue={httpCaching}
+            onValueChange={(itemValue, itemIndex)=>{
+                                                    console.log("Select PickerItem: ", itemValue);
+                                                    sethttpCaching(itemValue);
+                                                    }}>
           {settings.http_caching.list.map((item, index) => {
           return (<Picker.Item label={item.toString()} value={item} key={index}/>)
           })}
           {/* <Picker.Item label="One" value="1" />
           <Picker.Item label="Two" value="2" /> */}
         </Picker>
-        <Text> Stream server {settings.stream_server.value} </Text>
+        <Text> Stream server {streamServer} </Text>
         <Picker 
             mode="dropdown"
-            selectedValue={settings.stream_server.value}
-            onValueChange={(itemValue, itemIndex)=>{console.log("Select PickerItem: ", itemValue)}}>
+            selectedValue={streamServer}
+            onValueChange={(itemValue, itemIndex)=>{
+                                                    console.log("Select PickerItem: ", itemValue);
+                                                    setStreamServer(itemValue);
+                                                    }}>
           {settings.stream_server.list.map((item, index) => {
           return (<Picker.Item label={item.ip} value={item.ip} key={index}/>)
           })}
         </Picker>
-        <Text> Bitrate {settings.bitrate.value} </Text>
+        <Text> Bitrate {bitRate} </Text>
         <Picker 
             mode="dropdown"
-            selectedValue={settings.bitrate.value}
-            onValueChange={(itemValue, itemIndex)=>{console.log("Select PickerItem: ", itemValue)}}>
+            selectedValue={bitRate}
+            onValueChange={(itemValue, itemIndex)=>{
+                                                    console.log("Select PickerItem: ", itemValue);
+                                                    setBitRate(itemValue);
+                                                    }}>
           {settings.bitrate.list.map((item, index) => {
           return (<Picker.Item label={item.toString()} value={item} key={index}/>)
           })}
