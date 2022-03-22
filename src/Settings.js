@@ -20,13 +20,14 @@ const Settings = () => {
                                                           list: ["0", "1"]}
                                             });
 
-const {http_caching, stream_server, bitrate} = settings;
+// const {http_caching, stream_server, bitrate} = settings;
 
 let baseUrl = 'https://online.polbox.tv/api/json/';
 let url = baseUrl + "settings?"+ "var=all";
 let headers = new Headers();
 headers.append('Cookie', sid);
-if(!isLoaded) {fetch(url, {method:'GET',
+if(!isLoaded) {
+  fetch(url, {method:'GET',
             headers: headers,})
       .then(response => response.json())
       .then(json => {
@@ -36,8 +37,21 @@ if(!isLoaded) {fetch(url, {method:'GET',
                     sethttpCaching(settings.http_caching.value);
                     setStreamServer(settings.stream_server.value);
                     setBitRate(settings.bitrate.value);
-                    console.log("http_list: ", settings.http_caching.list)
+                    // console.log("http_list: ", settings.http_caching.list)
                   });
+  }
+
+const handelOnChansePicker = (param) => {
+  let url = baseUrl + "settings_set?"+ "var=" + param;
+  let headers = new Headers();
+  headers.append('Cookie', sid);
+    fetch(url, {method:'GET',
+              headers: headers,})
+        .then(response => response.json())
+        .then(json => {
+                      console.log('Settings_set JSON: ', JSON.stringify(json));
+                      // console.log("http_list: ", settings.http_caching.list)
+                    });
 }
     return (
       <View>
@@ -50,6 +64,7 @@ if(!isLoaded) {fetch(url, {method:'GET',
             onValueChange={(itemValue, itemIndex)=>{
                                                     console.log("Select PickerItem: ", itemValue);
                                                     sethttpCaching(itemValue);
+                                                    handelOnChansePicker("http_caching=" + bitRate);
                                                     }}>
           {settings.http_caching.list.map((item, index) => {
           return (<Picker.Item label={item.toString()} value={item} key={index}/>)
@@ -64,6 +79,7 @@ if(!isLoaded) {fetch(url, {method:'GET',
             onValueChange={(itemValue, itemIndex)=>{
                                                     console.log("Select PickerItem: ", itemValue);
                                                     setStreamServer(itemValue);
+                                                    handelOnChansePicker("stream_server=" + itemValue);
                                                     }}>
           {settings.stream_server.list.map((item, index) => {
           return (<Picker.Item label={item.ip} value={item.ip} key={index}/>)
@@ -76,6 +92,7 @@ if(!isLoaded) {fetch(url, {method:'GET',
             onValueChange={(itemValue, itemIndex)=>{
                                                     console.log("Select PickerItem: ", itemValue);
                                                     setBitRate(itemValue);
+                                                    handelOnChansePicker("bitrate=" + itemValue);
                                                     }}>
           {settings.bitrate.list.map((item, index) => {
           return (<Picker.Item label={item.toString()} value={item} key={index}/>)
