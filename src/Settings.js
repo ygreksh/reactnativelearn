@@ -49,7 +49,23 @@ if(!isLoaded) {fetch(url, {method:'GET',
           <Picker.Item label="Two" value="2" /> */}
         </Picker>
         <Text> Stream server {settings.stream_server.value} </Text>
+        <Picker 
+            mode="dropdown"
+            selectedValue={settings.stream_server.value}
+            onValueChange={(itemValue, itemIndex)=>{console.log("Select PickerItem: ", itemValue)}}>
+          {settings.stream_server.list.map((item, index) => {
+          return (<Picker.Item label={item.ip} value={item.ip} key={index}/>)
+          })}
+        </Picker>
         <Text> Bitrate {settings.bitrate.value} </Text>
+        <Picker 
+            mode="dropdown"
+            selectedValue={settings.bitrate.value}
+            onValueChange={(itemValue, itemIndex)=>{console.log("Select PickerItem: ", itemValue)}}>
+          {settings.bitrate.list.map((item, index) => {
+          return (<Picker.Item label={item.toString()} value={item} key={index}/>)
+          })}
+        </Picker>
       </View>
       
     )
