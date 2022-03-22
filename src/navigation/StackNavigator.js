@@ -6,6 +6,7 @@ import Player from "../Player";
 import VODItemDetails from "../VODItemDetails";
 import Settings from "../Settings";
 import TabNavigator from "./TabNavigator";
+import DrawerNavigator from "./DrawerNavigator";
 
 
 const Stack = createNativeStackNavigator();
@@ -15,7 +16,7 @@ const Stack = createNativeStackNavigator();
 export default function StackNavigator() {
   return (
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Home" component={TabNavigator} 
+        <Stack.Screen name="Home" component={DrawerNavigator} 
           options={{
           title: 'My home',
           headerStyle: {

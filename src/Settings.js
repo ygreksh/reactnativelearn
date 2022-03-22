@@ -37,7 +37,6 @@ if(!isLoaded) {
                     sethttpCaching(settings.http_caching.value);
                     setStreamServer(settings.stream_server.value);
                     setBitRate(settings.bitrate.value);
-                    // console.log("http_list: ", settings.http_caching.list)
                   });
   }
 
@@ -50,7 +49,6 @@ const handelOnChansePicker = (param) => {
         .then(response => response.json())
         .then(json => {
                       console.log('Settings_set JSON: ', JSON.stringify(json));
-                      // console.log("http_list: ", settings.http_caching.list)
                     });
 }
     return (
