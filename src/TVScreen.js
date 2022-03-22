@@ -21,7 +21,7 @@ const TVScreen = ({navigation}) => {
           .then(response => response.json())
           .then(json => {
             if(!isLoaded) {
-              console.log('channel_list from API : ', json);
+              // console.log('channel_list from API : ', json);
               setGroups(json.groups);
               setIsLoaded(true);
             }

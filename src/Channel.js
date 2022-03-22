@@ -21,11 +21,11 @@ const Channel = ({channel}) => {
                         headers: headers,})
               .then(response => response.json())
               .then(json => {
-                    console.log('Channel JSON: ', JSON.stringify(json));
+                    // console.log('Channel JSON: ', JSON.stringify(json));
                     let temp = json.url.replace("http/ts", "http");
                     let matches = temp.split(' ');
                     videoUrl = matches[0] + ".m3u8";
-                    console.log('Channel URL: ', videoUrl);
+                    // console.log('Channel URL: ', videoUrl);
                     navigation.navigate("Player", {
                         url: videoUrl
                     });

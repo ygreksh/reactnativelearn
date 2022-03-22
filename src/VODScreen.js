@@ -42,28 +42,18 @@ const VODScreen = ({navigation}) => {
                   }
                   });
       
-    // const renderGenreItem = ({item}) => <VODGenre name={item.name}/>
-    // const renderGenreItem = ({item}) => <Text>{item.name}</Text>
     const renderGenreItem = ({item}) => <View>
                                           <Text> {item.name}</Text>
                                           <FlatList 
                                             style={{backgroundColor: '#cccccc'}}
-                                            // data={[{id: "1", name: "Film 1"},{id: "2", name: "Film 2"},{id: "3", name: "Film 3"},{id: "4", name: "Film 4"}]}
                                             data={vodList.rows.filter((r) => r.genre_str.toLowerCase().includes(item.name.toLowerCase()))}
                                             horizontal={true}
-                                            // renderItem={(i) => <View><Text> |{i.item.id},{i.item.genre_str}| </Text></View>}
                                             renderItem={(i) => <VODItem vodItem={i.item}/>}
                                             keyExtractor={(i) => i.id}
                                           />
                                         </View>
     const renderVODItem = ({item}) => <VODItem vodItem={item}/>
 
-    const TEST_DATA = [
-        {id: "15", name: "Animowany"},
-        {id: "10", name: "Biograficzny"},
-        {id: "27", name: "Dokumentalny"},
-        {id: "8", name: "Dramat" }
-    ];
     return (
         <View>
             <Text>
