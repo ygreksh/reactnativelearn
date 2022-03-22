@@ -41,9 +41,9 @@ if(!isLoaded) {fetch(url, {method:'GET',
         <Picker 
             mode="dropdown"
             selectedValue={settings.http_caching.value}
-            onValueChange={(item, value)=>{console.log("Select PickerItem: ", value)}}>
+            onValueChange={(itemValue, itemIndex)=>{console.log("Select PickerItem: ", itemValue)}}>
           {settings.http_caching.list.map((item, index) => {
-          return (<Picker.Item label={item.toString()} value={index} key={index}/>)
+          return (<Picker.Item label={item.toString()} value={item} key={index}/>)
           })}
           {/* <Picker.Item label="One" value="1" />
           <Picker.Item label="Two" value="2" /> */}
