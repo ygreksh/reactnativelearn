@@ -48,7 +48,7 @@ const Login = ({navigation}) => {
 
   return (
     <View>
-        <Text>Login Screen</Text>
+      <Text>Login Screen</Text>
       <Controller
         control={control}
         name="login"
