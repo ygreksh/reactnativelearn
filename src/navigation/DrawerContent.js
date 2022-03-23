@@ -39,6 +39,10 @@ export function DrawerContent() {
                 onPress={() => navigation.navigate("Settings")}
             />
             <DrawerItem
+                label="Parental Control"
+                onPress={() => navigation.navigate("Parental Control")}
+            />
+            <DrawerItem
                 label="Logout"
                 onPress={() => logoutFunc()}
             />
