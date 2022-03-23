@@ -1,6 +1,6 @@
 import React from "react";
 import useStore from "../store";
-
+import { useNavigation } from "@react-navigation/native";
 import { Button, Text, View, StyleSheet } from "react-native";
 import {
     DrawerContentScrollView,
@@ -11,7 +11,8 @@ import {
 
   
 
-export function DrawerContent({navigation}) {
+export function DrawerContent() {
+    const navigation = useNavigation();
     let baseUrl = 'https://online.polbox.tv/api/json/';
     
     const sid = useStore(state => state.sid);

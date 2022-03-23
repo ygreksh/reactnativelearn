@@ -4,8 +4,6 @@ import { Button, Text, View, StyleSheet } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import TabNavigator from "./TabNavigator";
 import Settings from "../Settings";
-import Home from "../Home";
-import StackNavigator from "./StackNavigator";
 import { DrawerContent } from "./DrawerContent";
 
 const Drawer = createDrawerNavigator();

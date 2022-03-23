@@ -40,9 +40,10 @@ if(!isLoaded) {
                   });
   }
 
-const handelOnChansePicker = (param) => {
-  let url = baseUrl + "settings_set?"+ "var=" + param;
+const handelOnChangePicker = (param, value) => {
+  let url = baseUrl + "settings_set?"+ "var=" + param + "&val=" + value;
   let headers = new Headers();
+  console.log("Gnabge settings GET: ", url);
   headers.append('Cookie', sid);
     fetch(url, {method:'GET',
               headers: headers,})
@@ -62,7 +63,7 @@ const handelOnChansePicker = (param) => {
             onValueChange={(itemValue, itemIndex)=>{
                                                     console.log("Select PickerItem: ", itemValue);
                                                     sethttpCaching(itemValue);
-                                                    handelOnChansePicker("http_caching=" + bitRate);
+                                                    handelOnChangePicker("http_caching", bitRate);
                                                     }}>
           {settings.http_caching.list.map((item, index) => {
           return (<Picker.Item label={item.toString()} value={item} key={index}/>)
@@ -77,7 +78,7 @@ const handelOnChansePicker = (param) => {
             onValueChange={(itemValue, itemIndex)=>{
                                                     console.log("Select PickerItem: ", itemValue);
                                                     setStreamServer(itemValue);
-                                                    handelOnChansePicker("stream_server=" + itemValue);
+                                                    handelOnChangePicker("stream_server", itemValue);
                                                     }}>
           {settings.stream_server.list.map((item, index) => {
           return (<Picker.Item label={item.ip} value={item.ip} key={index}/>)
@@ -90,7 +91,7 @@ const handelOnChansePicker = (param) => {
             onValueChange={(itemValue, itemIndex)=>{
                                                     console.log("Select PickerItem: ", itemValue);
                                                     setBitRate(itemValue);
-                                                    handelOnChansePicker("bitrate=" + itemValue);
+                                                    handelOnChangePicker("bitrate", itemValue);
                                                     }}>
           {settings.bitrate.list.map((item, index) => {
           return (<Picker.Item label={item.toString()} value={item} key={index}/>)
