@@ -51,7 +51,7 @@ const Settings = () => {
 
     return (
       <View>
-          <View>
+          <View style={styles.container}>
             <Text> Parental control Screen </Text>
             <Text> =============== </Text>
             <Text> Old code </Text>
@@ -78,7 +78,7 @@ const Settings = () => {
                 onPress={() => handleSubmit()}
             />
           </View>
-          <View>
+          <View style={styles.container}>
                 <Text> Ask parental code: {askPCode.toString()}</Text>
                 <Switch 
                     onValueChange={toggleAskSwitch}
@@ -96,18 +96,26 @@ const Settings = () => {
     )
 }
 const styles = StyleSheet.create({
-    button: {
+    container: {
+      width: '100%',
+      alignItems: 'center',
+      backgroundColor: 'white',
       padding: 10,
-      elevation: 2,
-      height: 40,
-      width: 200,
+      elevation: 10,
+      backgroundColor: '#e6e6e6'
     },
     input: {
       height: 40,
-      width: 300,
+      width: '80%',
       margin: 10,
-      borderWidth: 1,
-      padding: 5,
-    }
+      fontSize: 18,
+      backgroundColor: 'white',
+      borderColor: 'gray',
+      borderWidth: StyleSheet.hairlineWidth,
+      borderRadius: 0,
+    },
+    button: {
+      width: '80%'
+    },
   });
 export default Settings;

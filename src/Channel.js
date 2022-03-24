@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Text, View, Image, StyleSheet, TouchableOpacity, TextInput, Modal, Alert } from "react-native";
+import { Text, Button, View, Image, StyleSheet, TouchableOpacity, TextInput, Modal, Alert } from "react-native";
 // import Modal from "react-native-modal"
 import { useNavigation } from "@react-navigation/native";
+import { useForm, Controller } from "react-hook-form";
 import useStore from './sidStore';
 import usePCodeStore from "./pcodeStore";
 import useAskPCodeStore from "./askPCodeStore";
 // import CheckBox from '@react-native-community/checkbox';
-import { Button, Checkbox } from "react-native-paper";
+import { Checkbox } from "react-native-paper";
 
 
 const Channel = ({channel}) => {
@@ -19,6 +20,12 @@ const Channel = ({channel}) => {
 
     const askPCode = useAskPCodeStore(state => state.askPCode);
     const setAskPCode = useAskPCodeStore(state => state.setAskPCode);
+
+    const { control, handleSubmit, formState: { errors } } = useForm({
+      defaultValues: {
+        protectCode: ''
+      }
+    });
 
     let baseUrl = 'https://online.polbox.tv/api/json/';
     
@@ -70,7 +77,12 @@ const Channel = ({channel}) => {
 
     }
 
+    const onSubmit = data => {
+      setAskPCode(data);
+    }
+
     return(
+      <>
         <View style={{padding: 5, alignItems: "center"}}
             >
                 <TouchableOpacity onPress={handleOnPress}>
@@ -82,35 +94,49 @@ const Channel = ({channel}) => {
                         {channel.name}
                     </Text>    
                 </TouchableOpacity>
-                <View 
-                  style={styles.centeredView}
-                >
-                  <Modal
-                      animationType="slide"
-                      visible={isModalVisible}
-                  >
-                      <Text>Enter parental code</Text>
-                      <TextInput 
-                          style={styles.input}
-                          type="outlined"
-                          label="Parental code"
-                          value=""
-                          onChangeText={() => {}}
-                      />
-                      <Checkbox
-                        status={askPCode}
-                        onPress={() => {
-                          setAskPCode(!askPCode);
-                        }}
-                      />
-                  <Button
-                    title="OK"
-                    onPress={handleModalOk}
+        </View>
+
+        <View 
+          style={styles.centeredView}
+        >
+          <Modal
+              animationType="slide"
+              visible={isModalVisible}
+          >
+            <View style={styles.container} >
+              <Text>Enter code</Text>
+              <Controller
+                control={control}
+                name="protectCode"
+                rules={{
+                required: true,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.input}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
                   />
+                )}
+              />
+              {errors.firstName && <Text>This is required.</Text>}
+              <Checkbox
+                                status={askPCode}
+                                onPress={() => {
+                                  setAskPCode(!askPCode);
+                                }}
+                              />
+              <Button 
+                title="OK" 
+                style={styles.button}
+                onPress={handleSubmit(handleModalOk)} />
+            </View>
+    
                   </Modal>
                 </View>
+                </>
             
-        </View>
     )
 }
 const styles = StyleSheet.create({
@@ -119,6 +145,14 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       alignItems: "center",
       marginTop: 22
+    },
+    container: {
+      width: '100%',
+      alignItems: 'center',
+      backgroundColor: 'white',
+      padding: 10,
+      elevation: 10,
+      backgroundColor: '#e6e6e6'
     },
     modalView: {
       margin: 20,
@@ -150,12 +184,15 @@ const styles = StyleSheet.create({
       textAlign: "center"
     },
     input: {
-      height: 40,
-      width: 200,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-    }
+      height: 50,
+      width: '80%',
+      margin: 10,
+      fontSize: 20,
+      backgroundColor: 'white',
+      borderColor: 'gray',
+      borderWidth: StyleSheet.hairlineWidth,
+      borderRadius: 0,
+    },
   });
   
 export default Channel;

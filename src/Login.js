@@ -47,7 +47,7 @@ const Login = ({navigation}) => {
 
 
   return (
-    <View>
+    <View style={styles.loginContainer} >
       <Text>Login Screen</Text>
       <Controller
         control={control}
@@ -70,7 +70,7 @@ const Login = ({navigation}) => {
         name="password"
         control={control}
         rules={{
-         maxLength: 100,
+         maxLength: 10,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
@@ -91,18 +91,26 @@ const Login = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
-  button: {
+  loginContainer: {
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: 'white',
     padding: 10,
-    elevation: 2,
-    height: 40,
-    width: 200,
+    elevation: 10,
+    backgroundColor: '#e6e6e6'
   },
   input: {
-    height: 40,
-    width: 300,
+    height: 50,
+    width: '80%',
     margin: 10,
-    borderWidth: 1,
-    padding: 5,
-  }
+    fontSize: 20,
+    backgroundColor: 'white',
+    borderColor: 'gray',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 0,
+  },
+  button: {
+    width: '80%'
+  },
 });
 export default Login;
