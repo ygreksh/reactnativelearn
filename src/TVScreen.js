@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { Button, Text, View, StyleSheet } from "react-native";
 import Groups from "./Groups";
-import useStore from './store'
+import useStore from './sidStore';
+import usePCodeStore from "./pcodeStore";
 
 
 
@@ -12,11 +13,13 @@ const TVScreen = ({navigation}) => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const sid = useStore(state => state.sid);
+    const pcode = usePCodeStore(state => state.pcode);
 
     const [groups, setGroups] = useState();
 
     useEffect(() => {
-      let url = baseUrl + "channel_list?" + "MWARE_SSID=" + sid; 
+      let url = baseUrl + "channel_list?" + "MWARE_SSID=" + sid + "&protect_code=" + pcode + "&hide=0"; 
+      console.log(url);
       fetch(url, {method:'GET'})
           .then(response => response.json())
           .then(json => {
@@ -48,9 +51,6 @@ const TVScreen = ({navigation}) => {
 
     return (
         <View>
-            <Text>
-                Home Screen
-            </Text>
             <Groups groups={groups}/>
         </View>
     )

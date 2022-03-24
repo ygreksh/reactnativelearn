@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { FlatList, Text, View, StyleSheet } from "react-native";
-import Groups from "./Groups";
-import useStore from './store'
-import VODGenre from "./VODGenre";
+import useStore from './sidStore'
 import VODItem from "./VODItem";
 
 

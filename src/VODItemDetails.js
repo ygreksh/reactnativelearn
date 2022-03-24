@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { Text, View, Image, StyleSheet, Button, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import useStore from './store';
+import useStore from './sidStore';
 
 
 const VODItemDetails = ({route}) => {

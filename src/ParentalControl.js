@@ -1,7 +1,8 @@
 import React, { useState} from "react";
 import { Text, View, TextInput, Button,StyleSheet } from "react-native";
 import { Switch } from "react-native-paper";
-import useStore from "./store";
+import useStore from "./sidStore";
+import useAskPCodeStore from "./askPCodeStore";
 
 
 const Settings = () => {
@@ -11,11 +12,19 @@ const Settings = () => {
     const [inputOldCode, setInputOldCode] = useState(null);
     const [inputNewCode, setInputNewCode] = useState(null);
     const [inputConfirmCode, setInputConfirmCode] = useState(null);
+    const askPCode = useAskPCodeStore(state => state.askPCode);
+    const setAskPCode = useAskPCodeStore(state => state.setAskPCode);
 
-    const [isAskEnabled, setIsAskEnabled] = useState(false);
-    const toggleAskSwitch = () => setIsAskEnabled(!isAskEnabled);
+    // const [isAskEnabled, setIsAskEnabled] = useState(false);
+    const toggleAskSwitch = () => {
+                    awaitsetAskPCode(!askPCode);
+                    console.log("isAskEnabled =", askPCode.toString());
+                }
     const [isChannelsHide, setIsChannelHide] = useState(false);
-    const toggleChannelsHideSwitch = () => setIsChannelHide(!isChannelsHide);
+    const toggleChannelsHideSwitch = () => {
+                    setIsChannelHide(!isChannelsHide);
+                    console.log("isChannelsHide =", isChannelsHide.toString());
+                }
     
     let baseUrl = 'https://online.polbox.tv/api/json/';
     
@@ -70,10 +79,10 @@ const Settings = () => {
             />
           </View>
           <View>
-                <Text> Ask parental code: {isAskEnabled.toString()}</Text>
+                <Text> Ask parental code: {askPCode.toString()}</Text>
                 <Switch 
                     onValueChange={toggleAskSwitch}
-                    value={isAskEnabled}
+                    value={askPCode}
                 />
                 <Text> Hide 18+ Channels: {isChannelsHide.toString()} </Text>
                 <Switch 

@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 // import { State } from "zustand";
-import useStore from './store'
+import useStore from './sidStore'
 
 
 const Login = ({navigation}) => {
@@ -15,8 +15,8 @@ const Login = ({navigation}) => {
       password: ''
     }
   });
-  let baseUrl = 'https://online.polbox.tv/api/json/';
 
+  let baseUrl = 'https://online.polbox.tv/api/json/';
 
   const onSubmit = data => {
     loginFunc(data);

@@ -1,5 +1,5 @@
 import React from "react";
-import useStore from "../store";
+import useStore from "../sidStore";
 import { useNavigation } from "@react-navigation/native";
 import { Button, Text, View, StyleSheet } from "react-native";
 import {

@@ -16,13 +16,5 @@ const Home = () => {
       </Tab.Navigator>
     )
 }
-const styles = StyleSheet.create({
-    button: {
-      padding: 10,
-      elevation: 2,
-      height: 40,
-      width: 300,
-    }
-  });
 
 export default Home;
