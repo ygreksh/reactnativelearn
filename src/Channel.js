@@ -8,6 +8,7 @@ import usePCodeStore from "./pcodeStore";
 import useAskPCodeStore from "./askPCodeStore";
 // import CheckBox from '@react-native-community/checkbox';
 import { Checkbox } from "react-native-paper";
+// import CheckBox from "react-native-check-box";
 
 
 const Channel = ({channel}) => {
