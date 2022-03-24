@@ -17,8 +17,8 @@ const TVScreen = ({navigation}) => {
 
     const [groups, setGroups] = useState();
 
-    useEffect(() => {
-      let url = baseUrl + "channel_list?" + "MWARE_SSID=" + sid + "&protect_code=" + pcode + "&hide=0"; 
+    
+      let url = baseUrl + "channel_list?" + "MWARE_SSID=" + sid + "&protect_code=" + pcode + "&hide=1"; 
       console.log(url);
       fetch(url, {method:'GET'})
           .then(response => response.json())
@@ -30,7 +30,7 @@ const TVScreen = ({navigation}) => {
             }
               
             });
-    });
+   
 
       // const getAccount = () => {
       //   let url = baseUrl + "account";
@@ -55,13 +55,4 @@ const TVScreen = ({navigation}) => {
         </View>
     )
 }
-const styles = StyleSheet.create({
-    button: {
-      padding: 10,
-      elevation: 2,
-      height: 40,
-      width: 300,
-    }
-  });
-
 export default TVScreen;

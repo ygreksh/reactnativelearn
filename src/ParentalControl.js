@@ -17,7 +17,7 @@ const Settings = () => {
 
     // const [isAskEnabled, setIsAskEnabled] = useState(false);
     const toggleAskSwitch = () => {
-                    awaitsetAskPCode(!askPCode);
+                    setAskPCode(!askPCode);
                     console.log("isAskEnabled =", askPCode.toString());
                 }
     const [isChannelsHide, setIsChannelHide] = useState(false);

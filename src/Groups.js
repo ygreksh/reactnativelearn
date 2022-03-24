@@ -7,9 +7,6 @@ const Groups = ({groups}) => {
 
     return(
         <View>
-            <Text>
-                TV Channels
-            </Text>
             <FlatList
                 data={groups}
                 renderItem={renderItem}

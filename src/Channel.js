@@ -5,7 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import useStore from './sidStore';
 import usePCodeStore from "./pcodeStore";
 import useAskPCodeStore from "./askPCodeStore";
-import { Button } from "react-native-paper";
+// import CheckBox from '@react-native-community/checkbox';
+import { Button, Checkbox } from "react-native-paper";
 
 
 const Channel = ({channel}) => {
@@ -19,10 +20,13 @@ const Channel = ({channel}) => {
     const askPCode = useAskPCodeStore(state => state.askPCode);
     const setAskPCode = useAskPCodeStore(state => state.setAskPCode);
 
+    let baseUrl = 'https://online.polbox.tv/api/json/';
     
     async function getUrl(id) {
-      let baseUrl = 'https://online.polbox.tv/api/json/';
-      let url = baseUrl + "get_url?"+ "cid=" + id + "&protect_code=" + pcode;
+      let url = baseUrl + "get_url?"+ "cid=" + id;
+      if (pcode !== null ) {
+        url +=  "&protect_code=" + pcode;
+      }
       console.log(url);
       let headers = new Headers();
       headers.append('Cookie', sid);
@@ -55,7 +59,9 @@ const Channel = ({channel}) => {
         console.log(channel.name + " is protected")
         setModalVisible(true);
       } else {
-        resetPCode();
+        if (askPCode) {
+          resetPCode();
+        }
         videoUrl = videoUrl + ".m3u8";
         navigation.navigate("Player", {
             url: videoUrl
@@ -91,13 +97,15 @@ const Channel = ({channel}) => {
                           value=""
                           onChangeText={() => {}}
                       />
-                  <Button 
-                      style={styles.button}
-                      title="OK"
-                      onPress={() => {
-                                setModalVisible(false);
-                                handleModalOk();
-                            }}
+                      <Checkbox
+                        status={askPCode}
+                        onPress={() => {
+                          setAskPCode(!askPCode);
+                        }}
+                      />
+                  <Button
+                    title="OK"
+                    onPress={handleModalOk}
                   />
                   </Modal>
                 </View>
@@ -127,6 +135,7 @@ const styles = StyleSheet.create({
       elevation: 5
     },
     button: {
+      color: 'red',
       padding: 10,
       elevation: 2
     },
@@ -135,11 +144,6 @@ const styles = StyleSheet.create({
     },
     buttonClose: {
       backgroundColor: "green",
-    },
-    textStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center"
     },
     modalText: {
       marginBottom: 15,
