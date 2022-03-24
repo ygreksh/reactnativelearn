@@ -30,11 +30,15 @@ const Channel = ({channel}) => {
 
     let baseUrl = 'https://online.polbox.tv/api/json/';
     
-    async function getUrl(id) {
+    async function getUrl(id, code) {
       let url = baseUrl + "get_url?"+ "cid=" + id;
-      if (pcode !== null ) {
-        url +=  "&protect_code=" + pcode;
-      }
+      // if (pcode !== null ) {
+      //   url +=  "&protect_code=" + pcode;
+      // } else {
+      //   url +=  "&protect_code=" + code;
+      // }
+      url +=  "&protect_code=" + code;
+
       console.log(url);
       let headers = new Headers();
       headers.append('Cookie', sid);
@@ -51,11 +55,19 @@ const Channel = ({channel}) => {
       }
     }
 
-    async function handleModalOk() {
-      // setModalVisible(false);
-      await setPCode("785206");
+    async function handleModalOk(data) {
+      setAskPCode(data);
       console.log("PCode now:", pcode)
-      handleOnPress();
+      let videoUrl = await getUrl(channel.id, data);
+      if (videoUrl === "protected") {
+        console.log(channel.name + "Wrong protect_code")
+        setModalVisible(false);
+      } else {
+        videoUrl = videoUrl + ".m3u8";
+        navigation.navigate("Player", {
+            url: videoUrl
+        });
+      }
     }
     
     async function handleOnPress () {
@@ -76,10 +88,6 @@ const Channel = ({channel}) => {
         });
     }
 
-    }
-
-    const onSubmit = data => {
-      setAskPCode(data);
     }
 
     return(
@@ -110,7 +118,7 @@ const Channel = ({channel}) => {
                 control={control}
                 name="protectCode"
                 rules={{
-                required: true,
+                required: false,
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
