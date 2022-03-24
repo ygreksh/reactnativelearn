@@ -17,19 +17,20 @@ const TVScreen = ({navigation}) => {
 
     const [groups, setGroups] = useState();
 
-    
+    useEffect(() => {
       let url = baseUrl + "channel_list?" + "MWARE_SSID=" + sid + "&protect_code=" + pcode + "&hide=1"; 
       console.log(url);
-      fetch(url, {method:'GET'})
-          .then(response => response.json())
-          .then(json => {
-            if(!isLoaded) {
-              // console.log('channel_list from API : ', json);
-              setGroups(json.groups);
-              setIsLoaded(true);
-            }
-              
-            });
+      if(!isLoaded) {
+        fetch(url, {method:'GET'})
+        .then(response => response.json())
+        .then(json => {
+            // console.log('channel_list from API : ', json);
+            setGroups(json.groups);
+            setIsLoaded(true);
+          });
+      }
+    });
+       
    
 
       // const getAccount = () => {
