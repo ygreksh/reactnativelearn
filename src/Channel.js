@@ -58,7 +58,7 @@ const Channel = ({channel}) => {
     async function handleModalOk(data) {
       setAskPCode(data);
       console.log("PCode now:", pcode)
-      let videoUrl = await getUrl(channel.id, data);
+      let videoUrl = await getUrl(channel.id, data.protectCode);
       if (videoUrl === "protected") {
         console.log(channel.name + "Wrong protect_code")
         setModalVisible(false);
