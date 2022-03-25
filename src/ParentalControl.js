@@ -3,6 +3,7 @@ import { Text, View, TextInput, Button,StyleSheet } from "react-native";
 import { Switch } from "react-native-paper";
 import useStore from "./sidStore";
 import useAskPCodeStore from "./askPCodeStore";
+import useHideStore from "./hideChannelsStore";
 
 
 const Settings = () => {
@@ -14,16 +15,21 @@ const Settings = () => {
     const [inputConfirmCode, setInputConfirmCode] = useState(null);
     const askPCode = useAskPCodeStore(state => state.askPCode);
     const setAskPCode = useAskPCodeStore(state => state.setAskPCode);
+    const hide = useHideStore(state => state.hide);
+    const setHideOn = useHideStore(state => state.setHideOn);
+    const setHideOff = useHideStore(state => state.setHideOff);
 
     // const [isAskEnabled, setIsAskEnabled] = useState(false);
     const toggleAskSwitch = () => {
                     setAskPCode(!askPCode);
                     console.log("isAskEnabled =", askPCode.toString());
                 }
-    const [isChannelsHide, setIsChannelHide] = useState(false);
+    // const [isChannelsHide, setIsChannelHide] = useState(false);
     const toggleChannelsHideSwitch = () => {
-                    setIsChannelHide(!isChannelsHide);
-                    console.log("isChannelsHide =", isChannelsHide.toString());
+                    if (hide) {setHideOff();}
+                    else {setHideOn();}
+                    // setIsChannelHide(!isChannelsHide);
+                    console.log("isChannelsHide =", hide===0 ? "false" : "true");
                 }
     
     let baseUrl = 'https://online.polbox.tv/api/json/';
@@ -84,10 +90,10 @@ const Settings = () => {
                     onValueChange={toggleAskSwitch}
                     value={askPCode}
                 />
-                <Text> Hide 18+ Channels: {isChannelsHide.toString()} </Text>
+                <Text> Hide Channels: {hide===0 ? "false" : "true"} </Text>
                 <Switch 
                     onValueChange={toggleChannelsHideSwitch}
-                    value={isChannelsHide}
+                    value={hide===0 ? false : true}
                 />
           </View>
 

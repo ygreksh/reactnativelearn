@@ -25,8 +25,8 @@ export function DrawerContent() {
           .then(response => response.json())
           .then(json => {
               console.log('LOGOUT : ', json);
+              navigation.navigate('Login');
               resetSid();
-                navigation.navigate('Login');
             });
         }
       }

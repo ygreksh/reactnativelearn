@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, Button, View, Image, StyleSheet, TouchableOpacity, TextInput, Modal, Alert } from "react-native";
+import { Text, Button, View, Image, StyleSheet, TouchableOpacity, TextInput, Modal, Alert, FlatList } from "react-native";
 // import Modal from "react-native-modal"
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
@@ -7,7 +7,7 @@ import useStore from './sidStore';
 import usePCodeStore from "./pcodeStore";
 import useAskPCodeStore from "./askPCodeStore";
 // import CheckBox from '@react-native-community/checkbox';
-import { Checkbox } from "react-native-paper";
+import { Checkbox, Portal, Provider, Switch } from "react-native-paper";
 // import CheckBox from "react-native-check-box";
 
 
@@ -31,13 +31,11 @@ const Channel = ({channel}) => {
     let baseUrl = 'https://online.polbox.tv/api/json/';
     
     async function getUrl(id, code) {
+
       let url = baseUrl + "get_url?"+ "cid=" + id;
-      // if (pcode !== null ) {
-      //   url +=  "&protect_code=" + pcode;
-      // } else {
-      //   url +=  "&protect_code=" + code;
-      // }
-      url +=  "&protect_code=" + code;
+      if (code !== undefined) {
+        url +=  "&protect_code=" + code;
+      }
 
       console.log(url);
       let headers = new Headers();
@@ -48,7 +46,9 @@ const Channel = ({channel}) => {
         let json = await response.json();
         let temp = json.url.replace("http/ts", "http");
         let matches = temp.split(' ');
-        return matches[0];
+        let videoUrl = matches[0];
+        console.log("VideoUrl:", videoUrl);
+        return videoUrl;
       } else {
         alert("Error HTT: " + response.status);
         return null
@@ -60,7 +60,8 @@ const Channel = ({channel}) => {
       console.log("PCode now:", pcode)
       let videoUrl = await getUrl(channel.id, data.protectCode);
       if (videoUrl === "protected") {
-        console.log(channel.name + "Wrong protect_code")
+        console.log(channel.name + " Wrong protect_code")
+        Alert.alert("Wrong code!")
         setModalVisible(false);
       } else {
         videoUrl = videoUrl + ".m3u8";
@@ -79,19 +80,24 @@ const Channel = ({channel}) => {
         console.log(channel.name + " is protected")
         setModalVisible(true);
       } else {
-        if (askPCode) {
-          resetPCode();
+          if (askPCode) {
+            // resetPCode();
+          }
+          videoUrl = videoUrl + ".m3u8";
+          navigation.navigate("Player", {
+              url: videoUrl
+          });
         }
-        videoUrl = videoUrl + ".m3u8";
-        navigation.navigate("Player", {
-            url: videoUrl
-        });
-    }
 
     }
-
+    const toggleAskSwitch = () => {
+      setAskPCode(!askPCode);
+      // console.log("isAskEnabled =", askPCode.toString());
+    }
+    const hideModal = () => setModalVisible(false);
+    const containerStyle = {backgroundColor: 'white', padding: 20};
     return(
-      <>
+      <Provider>
         <View style={{padding: 5, alignItems: "center"}}
             >
                 <TouchableOpacity onPress={handleOnPress}>
@@ -104,21 +110,23 @@ const Channel = ({channel}) => {
                     </Text>    
                 </TouchableOpacity>
         </View>
-
         <View 
           style={styles.centeredView}
         >
-          <Modal
+        <Portal>
+        <Modal
               animationType="slide"
               visible={isModalVisible}
-          >
+              onDismiss={hideModal}
+              contentContainerStyle={containerStyle}
+            >
             <View style={styles.container} >
               <Text>Enter code</Text>
               <Controller
                 control={control}
                 name="protectCode"
                 rules={{
-                required: false,
+                required: true,
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
@@ -130,21 +138,26 @@ const Channel = ({channel}) => {
                 )}
               />
               {errors.firstName && <Text>This is required.</Text>}
-              <Checkbox
-                                status={askPCode}
-                                onPress={() => {
-                                  setAskPCode(!askPCode);
-                                }}
-                              />
+              <Text> Ask parental code: {askPCode.toString()}</Text>
+              <Switch 
+                    onValueChange={toggleAskSwitch}
+                    value={askPCode}
+              />
               <Button 
                 title="OK" 
                 style={styles.button}
                 onPress={handleSubmit(handleModalOk)} />
+              <Button 
+                title="Cancel" 
+                style={styles.button}
+                onPress={hideModal} />
             </View>
     
-                  </Modal>
-                </View>
-                </>
+        </Modal>  
+        </Portal>
+            
+      </View>
+      </Provider>
             
     )
 }
