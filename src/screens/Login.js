@@ -1,8 +1,7 @@
 import React from "react";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-// import { State } from "zustand";
-import useSidStore from '../store/sidStore'
+import { useSidStore } from "../store";
 
 
 const Login = ({navigation}) => {

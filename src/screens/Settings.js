@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Button, Text, View, StyleSheet } from "react-native";
 import {Picker} from '@react-native-picker/picker';
-import useSidStore from "../store/sidStore";
+import { useSidStore } from "../store";
 
 
 const Settings = () => {

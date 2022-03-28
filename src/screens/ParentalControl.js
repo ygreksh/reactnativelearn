@@ -1,12 +1,10 @@
 import React, { useState} from "react";
 import { Text, View, TextInput, Button,StyleSheet } from "react-native";
 import { Switch } from "react-native-paper";
-import useSidStore from "../store/sidStore";
-import useAskPCodeStore from "../store/askPCodeStore";
-import useHideStore from "../store/hideChannelsStore";
+import { useSidStore, useAskPCodeStore, useHideStore } from "../store";
 
 
-const Settings = () => {
+const ParentalControl = () => {
 
     const sid = useSidStore(state => state.sid);
     // const [isLoaded, setIsLoaded] = useState(false);
@@ -124,4 +122,4 @@ const styles = StyleSheet.create({
       width: '80%'
     },
   });
-export default Settings;
+export default ParentalControl;

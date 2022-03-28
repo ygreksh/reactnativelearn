@@ -1,11 +1,7 @@
 import React, {useEffect, useLayoutEffect, useState} from "react";
 import { Button, Text, View, StyleSheet } from "react-native";
 import Groups from "../components/Groups";
-import useSidStore from '../store/sidStore';
-import usePCodeStore from "../store/pcodeStore";
-import useHideStore from "../store/hideChannelsStore";
-import useTVStore from "../store/TVStore";
-
+import { useSidStore, usePCodeStore, useHideStore, useTVStore } from "../store";
 
 
 const TVScreen = ({navigation}) => {

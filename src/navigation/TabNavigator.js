@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Button, Text, View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import TVScreen from "../screens/TVScreen";
-import VODScreen from "../screens/VODScreen";
+import { TVScreen, VODScreen } from "../screens";
 import 'react-native-gesture-handler';
 
 const Tab = createBottomTabNavigator();

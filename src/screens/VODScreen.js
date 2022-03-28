@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { FlatList, Text, View, StyleSheet } from "react-native";
-import useSidStore from '../store/sidStore'
+import { useSidStore } from "../store";
 import VODItem from "../components/VODItem";
 
 
