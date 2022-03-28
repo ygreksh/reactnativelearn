@@ -3,12 +3,8 @@ import { Text, Button, View, Image, StyleSheet, TouchableOpacity, TextInput, Mod
 // import Modal from "react-native-modal"
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
-import useSidStore from '../store/sidStore';
-import usePCodeStore from "../store/pcodeStore";
-import useAskPCodeStore from "../store/askPCodeStore";
-// import CheckBox from '@react-native-community/checkbox';
+import { useSidStore, usePCodeStore, useAskPCodeStore } from "../store";
 import { Checkbox, Portal, Provider, Switch } from "react-native-paper";
-// import CheckBox from "react-native-check-box";
 
 
 const Channel = ({channel}) => {

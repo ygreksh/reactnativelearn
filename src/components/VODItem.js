@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import useSidStore from '../store/sidStore';
+import { useSidStore } from "../store";
 
 
 const VODItem = ({vodItem}) => {
