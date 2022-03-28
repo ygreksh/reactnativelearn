@@ -4,6 +4,7 @@ import Groups from "../components/Groups";
 import useSidStore from '../store/sidStore';
 import usePCodeStore from "../store/pcodeStore";
 import useHideStore from "../store/hideChannelsStore";
+import useTVStore from "../store/TVStore";
 
 
 
@@ -15,24 +16,26 @@ const TVScreen = ({navigation}) => {
     const sid = useSidStore(state => state.sid);
     const pcode = usePCodeStore(state => state.pcode);
     const hide = useHideStore(state => state.hide);
-    const [groups, setGroups] = useState();
+    // const [groups, setGroups] = useState();
+    const groups = useTVStore (state => state.groups);
+    const setGroups = useTVStore (state => state.setGroups);
 
     useEffect(() => {
-      let url = baseUrl + "channel_list?" + "MWARE_SSID=" + sid + "&show=" + hide; 
+      let url = baseUrl + "channel_list?" + "MWARE_SSID=" + sid; 
       if (pcode) {
         url += "&protect_code=" + pcode;
       }
       console.log(url);
-      if(!isLoaded) {
         fetch(url, {method:'GET'})
         .then(response => response.json())
         .then(json => {
-            // console.log('channel_list from API : ', json);
-            setGroups(json.groups);
-            setIsLoaded(true);
+            console.log('channel_list from API : ', json);
+            if (hide === 0) {
+              setGroups(json.groups);
+            } else setGroups(json.groups.filter((f) => !f.name.toLowerCase().includes("erot")));
+            // setIsLoaded(true);
           });
-      }
-    });
+    }, groups);
        
   //  const handleGetList = async () => {
   //   let url = baseUrl + "rule?"+ "cmd=reset_channels" + "&protect_code=" + "785206";
