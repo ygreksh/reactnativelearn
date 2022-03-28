@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import { Button, Text, View, StyleSheet } from "react-native";
 import Groups from "../components/Groups";
 import useSidStore from '../store/sidStore';
@@ -11,7 +11,6 @@ import useTVStore from "../store/TVStore";
 const TVScreen = ({navigation}) => {
     let baseUrl = 'https://online.polbox.tv/api/json/';
 
-    const [isLoaded, setIsLoaded] = useState(false);
 
     const sid = useSidStore(state => state.sid);
     const pcode = usePCodeStore(state => state.pcode);
@@ -33,9 +32,12 @@ const TVScreen = ({navigation}) => {
             if (hide === 0) {
               setGroups(json.groups);
             } else setGroups(json.groups.filter((f) => !f.name.toLowerCase().includes("erot")));
-            // setIsLoaded(true);
           });
-    }, groups);
+    }, 
+    // groups
+    // hide
+    [hide]
+    );
        
   //  const handleGetList = async () => {
   //   let url = baseUrl + "rule?"+ "cmd=reset_channels" + "&protect_code=" + "785206";
