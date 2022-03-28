@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import { Button, Text, View, StyleSheet } from "react-native";
 import {Picker} from '@react-native-picker/picker';
-import useStore from "./sidStore";
+import useSidStore from "../store/sidStore";
 
 
 const Settings = () => {
 
-  const sid = useStore(state => state.sid);
+  const sid = useSidStore(state => state.sid);
   const [isLoaded, setIsLoaded] = useState(false);
   const [httpCaching, sethttpCaching] = useState(0);
   const [streamServer, setStreamServer] = useState(0);

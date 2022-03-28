@@ -1,11 +1,11 @@
 import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from "../Login";
-import Player from "../Player";
-import VODItemDetails from "../VODItemDetails";
-import Settings from "../Settings";
+import Login from "../screens/Login";
+import Player from "../screens/Player";
+import VODItemDetails from "../screens/VODItemDetails";
+import Settings from "../screens/Settings";
 import DrawerNavigator from "./DrawerNavigator";
-import ParentalControl from "../ParentalControl";
+import ParentalControl from "../screens/ParentalControl";
 
 
 const Stack = createNativeStackNavigator();

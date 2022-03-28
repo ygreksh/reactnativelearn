@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import { Button, Text, View, StyleSheet } from "react-native";
-import Groups from "./Groups";
-import useStore from './sidStore';
-import usePCodeStore from "./pcodeStore";
-import useHideStore from "./hideChannelsStore";
+import Groups from "../components/Groups";
+import useSidStore from '../store/sidStore';
+import usePCodeStore from "../store/pcodeStore";
+import useHideStore from "../store/hideChannelsStore";
 
 
 
@@ -12,7 +12,7 @@ const TVScreen = ({navigation}) => {
 
     const [isLoaded, setIsLoaded] = useState(false);
 
-    const sid = useStore(state => state.sid);
+    const sid = useSidStore(state => state.sid);
     const pcode = usePCodeStore(state => state.pcode);
     const hide = useHideStore(state => state.hide);
     const [groups, setGroups] = useState();

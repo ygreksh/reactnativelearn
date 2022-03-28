@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, FlatList, StyleSheet } from "react-native";
-import Channel from "./Channel";
+// import Channel from "./Channel";
 
 const VODGenre = ({name}) => {
     

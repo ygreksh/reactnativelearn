@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { FlatList, Text, View, StyleSheet } from "react-native";
-import useStore from './sidStore'
-import VODItem from "./VODItem";
+import useSidStore from '../store/sidStore'
+import VODItem from "../components/VODItem";
 
 
 
@@ -12,7 +12,7 @@ const VODScreen = ({navigation}) => {
     const [isGenresLoaded, setIsGenresLoaded] = useState(false);
     const [isVODLoaded, setIsVODLoaded] = useState(false);
 
-    const sid = useStore(state => state.sid);
+    const sid = useSidStore(state => state.sid);
 
     const [genres, setGenres] = useState({genres: []});
     const [vodList, setVODList] = useState({rows:[{id:"0", name: "empty", poster: "", genre_str: ""}]});

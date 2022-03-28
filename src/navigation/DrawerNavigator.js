@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Text, View, StyleSheet } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import TabNavigator from "./TabNavigator";
-import Settings from "../Settings";
+import Settings from "../screens/Settings";
 import { DrawerContent } from "./DrawerContent";
 
 const Drawer = createDrawerNavigator();

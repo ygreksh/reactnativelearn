@@ -1,5 +1,5 @@
 import React from "react";
-import useStore from "../sidStore";
+import useSidStore from "../store/sidStore";
 import { useNavigation } from "@react-navigation/native";
 import { Button, Text, View, StyleSheet } from "react-native";
 import {
@@ -15,8 +15,8 @@ export function DrawerContent() {
     const navigation = useNavigation();
     let baseUrl = 'https://online.polbox.tv/api/json/';
     
-    const sid = useStore(state => state.sid);
-    const resetSid = useStore(state => state.resetSid);
+    const sid = useSidStore(state => state.sid);
+    const resetSid = useSidStore(state => state.resetSid);
 
     const logoutFunc = () => {
         if(sid) {

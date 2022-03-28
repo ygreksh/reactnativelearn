@@ -3,9 +3,9 @@ import { Text, Button, View, Image, StyleSheet, TouchableOpacity, TextInput, Mod
 // import Modal from "react-native-modal"
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
-import useStore from './sidStore';
-import usePCodeStore from "./pcodeStore";
-import useAskPCodeStore from "./askPCodeStore";
+import useSidStore from '../store/sidStore';
+import usePCodeStore from "../store/pcodeStore";
+import useAskPCodeStore from "../store/askPCodeStore";
 // import CheckBox from '@react-native-community/checkbox';
 import { Checkbox, Portal, Provider, Switch } from "react-native-paper";
 // import CheckBox from "react-native-check-box";
@@ -13,7 +13,7 @@ import { Checkbox, Portal, Provider, Switch } from "react-native-paper";
 
 const Channel = ({channel}) => {
     const navigation = useNavigation();
-    const sid = useStore(state => state.sid);
+    const sid = useSidStore(state => state.sid);
     const [isModalVisible, setModalVisible] = useState(false);
     const pcode = usePCodeStore(state => state.pcode);
     const setPCode = usePCodeStore(state => state.setPCode);
@@ -56,7 +56,7 @@ const Channel = ({channel}) => {
     }
 
     async function handleModalOk(data) {
-      setAskPCode(data);
+      setPCode(data.protectCode);
       console.log("PCode now:", pcode);
       let videoUrl = await getUrl(channel.id, data.protectCode);
       if (videoUrl === "protected") {

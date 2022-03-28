@@ -1,14 +1,14 @@
 import React, { useState} from "react";
 import { Text, View, TextInput, Button,StyleSheet } from "react-native";
 import { Switch } from "react-native-paper";
-import useStore from "./sidStore";
-import useAskPCodeStore from "./askPCodeStore";
-import useHideStore from "./hideChannelsStore";
+import useSidStore from "../store/sidStore";
+import useAskPCodeStore from "../store/askPCodeStore";
+import useHideStore from "../store/hideChannelsStore";
 
 
 const Settings = () => {
 
-    const sid = useStore(state => state.sid);
+    const sid = useSidStore(state => state.sid);
     // const [isLoaded, setIsLoaded] = useState(false);
     const [inputOldCode, setInputOldCode] = useState(null);
     const [inputNewCode, setInputNewCode] = useState(null);

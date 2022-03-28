@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import { Text, View, Image, StyleSheet, Button, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import useStore from './sidStore';
+import useSidStore from '../store/sidStore';
 
 
 const VODItemDetails = ({route}) => {
     const {vodInfo} = route.params;
     const navigation = useNavigation();
-    const sid = useStore(state => state.sid);
+    const sid = useSidStore(state => state.sid);
     const [film, setFilm] = useState({});
 
     async function handleOnPress (video) {

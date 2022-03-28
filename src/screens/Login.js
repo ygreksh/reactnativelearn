@@ -2,11 +2,11 @@ import React from "react";
 import { Text, View, TextInput, Button, StyleSheet } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 // import { State } from "zustand";
-import useStore from './sidStore'
+import useSidStore from '../store/sidStore'
 
 
 const Login = ({navigation}) => {
-    const setSid = useStore(state => state.setSid);
+    const setSid = useSidStore(state => state.setSid);
 
 
   const { control, handleSubmit, formState: { errors } } = useForm({

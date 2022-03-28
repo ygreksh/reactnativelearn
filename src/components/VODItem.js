@@ -1,12 +1,12 @@
 import React from "react";
 import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import useStore from './sidStore';
+import useSidStore from '../store/sidStore';
 
 
 const VODItem = ({vodItem}) => {
     const navigation = useNavigation();
-    const sid = useStore(state => state.sid);
+    const sid = useSidStore(state => state.sid);
 
     async function handleOnPress () {
         console.log("Details : " + vodItem.name);
