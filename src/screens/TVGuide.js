@@ -38,7 +38,7 @@ const TVGuide = ({navigation}) => {
                 style={styles.button}
                 onPress={handleGetEPG}
              />
-             <Text> Today: {now.toString()} </Text>
+             <Text> Today: {now.getDate()} : {now.getMonth()} : {now.getFullYear()%100} </Text>
              <FlatList 
               data={currentEPG}
               renderItem={renderEPGItem}

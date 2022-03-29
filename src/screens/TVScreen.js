@@ -11,42 +11,29 @@ const TVScreen = ({navigation}) => {
     const sid = useSidStore(state => state.sid);
     const pcode = usePCodeStore(state => state.pcode);
     const hide = useHideStore(state => state.hide);
-    // const [groups, setGroups] = useState();
     const groups = useTVStore (state => state.groups);
     const setGroups = useTVStore (state => state.setGroups);
 
     useEffect(() => {
-      let url = baseUrl + "channel_list?"; 
+      let url = baseUrl + "channel_list?" + "MWARE_SSID=" + sid; 
       if (pcode) {
         url += "&protect_code=" + pcode;
       }
       console.log(url);
-      let headers = new Headers();
-      headers.append('Cookie', sid);
-      fetch(url, {method:'GET',
-                    headers: headers,})
+        fetch(url, {method:'GET'})
         .then(response => response.json())
         .then(json => {
-            // console.log('channel_list from API : ', json);
-            console("channel_list loading");
+            console.log('channel_list from API : ', json);
             if (hide === 0) {
               setGroups(json.groups);
-            } else setGroups(json.groups.filter((f) => !f.name.toLowerCase().includes("erot")));
-          })
-          .catch((error)=>{
-            console.log("channel_list error", error.message);
-         });
+            } else setGroups(json.groups.filter((f) => f.id !== "85"));
+          });
     }, 
     [hide]
     );
-       
+  
     return (
         <View style={styles.container}>
-          {/* <Button 
-            title="RULE: get_list" 
-            style={styles.button}
-            onPress={handleGetList}
-          /> */}
           <Groups groups={groups}/>
         </View>
     )
