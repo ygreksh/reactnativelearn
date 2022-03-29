@@ -25,6 +25,7 @@ const Player = ({route}) => {
                 controls
                 resizeMode="contain"
             />
+          <Text> EPG current day </Text>
         </View>
         
     )
