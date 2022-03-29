@@ -11,18 +11,22 @@ const styles = StyleSheet.create({
       bottom: 0,
       right: 0,
     },
+    container: {
+      flex: 1, 
+      alignItems: 'center', 
+      justifyContent: 'center'
+    }
   });
 
 const Player = ({route}) => {
     const {url} = route.params;
-    // const {uri} = video;
     return(
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={styles.container}>
           <Text>Video: {url}</Text>
             <Video
                 style={styles.backgroundVideo}
                 source={{uri: url}}
-                controls
+                controls={true}
                 resizeMode="contain"
             />
           <Text> EPG current day </Text>

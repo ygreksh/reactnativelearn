@@ -16,58 +16,30 @@ const TVScreen = ({navigation}) => {
     const setGroups = useTVStore (state => state.setGroups);
 
     useEffect(() => {
-      let url = baseUrl + "channel_list?" + "MWARE_SSID=" + sid; 
+      let url = baseUrl + "channel_list?"; 
       if (pcode) {
         url += "&protect_code=" + pcode;
       }
       console.log(url);
-        fetch(url, {method:'GET'})
+      let headers = new Headers();
+      headers.append('Cookie', sid);
+      fetch(url, {method:'GET',
+                    headers: headers,})
         .then(response => response.json())
         .then(json => {
-            console.log('channel_list from API : ', json);
+            // console.log('channel_list from API : ', json);
+            console("channel_list loading");
             if (hide === 0) {
               setGroups(json.groups);
             } else setGroups(json.groups.filter((f) => !f.name.toLowerCase().includes("erot")));
-          });
+          })
+          .catch((error)=>{
+            console.log("channel_list error", error.message);
+         });
     }, 
-    // groups
-    // hide
     [hide]
     );
        
-  //  const handleGetList = async () => {
-  //   let url = baseUrl + "rule?"+ "cmd=reset_channels" + "&protect_code=" + "785206";
-    
-  //   console.log(url);
-  //   let headers = new Headers();
-  //   headers.append('Cookie', sid);
-  //   let response = await fetch(url, {method:'GET',
-  //                   headers: headers,});
-  //   if (response.ok) {
-  //     let json = await response.json();
-  //     console.log("RULE: get_list:", JSON.stringify(json));
-  //   } else {
-  //     alert("Error HTT: " + response.status);
-  //   }
-  //  }
-
-      // const getAccount = () => {
-      //   let url = baseUrl + "account";
-      //   let headers = new Headers();
-      //   if (sid) {
-      //       console.log('sid now', sid);
-      //       headers.append('Cookie', sid);
-      //     fetch(url, {method:'GET',
-      //               headers: headers,})
-      //     .then(response => response.json())
-      //     .then(json => {
-      //         console.log('GET ACCOUNT: ', json);
-      //         alert(JSON.stringify(json));
-      //         });
-      //     }
-    
-      // }
-
     return (
         <View style={styles.container}>
           {/* <Button 

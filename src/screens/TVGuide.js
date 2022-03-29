@@ -1,20 +1,20 @@
 import React, {useEffect, useLayoutEffect, useState} from "react";
-import { Alert, Button, Text, View, StyleSheet } from "react-native";
+import { Alert, Button, Text, View, StyleSheet, FlatList } from "react-native";
 import Groups from "../components/Groups";
 import { useSidStore, usePCodeStore, useHideStore, useTVStore } from "../store";
 
 
 const TVGuide = ({navigation}) => {
     let baseUrl = 'https://online.polbox.tv/api/json/';
+    let now = new Date();
+    const sid = useSidStore(state => state.sid);
+    const [currentEPG, setCurrentEPG] = useState();
+    
+    const handleGetEPG = async () => {
+        // Alert.alert("Get EPG");
 
-    const handleGetEPG = () => {
-        Alert.alert("Get EPG");
-
-        let url = baseUrl + "epg?"+ "cid=" + id;
-        if (code !== undefined) {
-          url +=  "&protect_code=" + code;
-        }
-  
+        let url = baseUrl + "epg?"+ "cid=" + 1534 + "&day=290322";
+        
         console.log(url);
         let headers = new Headers();
         headers.append('Cookie', sid);
@@ -22,18 +22,14 @@ const TVGuide = ({navigation}) => {
                         headers: headers,});
         if (response.ok) {
           let json = await response.json();
-          let temp = json.url.replace("http/ts", "http");
-          let matches = temp.split(' ');
-          let videoUrl = matches[0];
-          console.log("VideoUrl:", videoUrl);
-          return videoUrl;
+          setCurrentEPG(json.epg);
+          console.log("CurrentEPG :", currentEPG);
         } else {
           Alert.alert("Error HTT: " + response.status);
-          return null
         }
     }
        
- 
+    const renderEPGItem = ({item}) => <Text> {item.ut_start} : {item.progname} </Text>
     return (
         <View style={styles.container}>
              <Text> TV Guide </Text>
@@ -41,6 +37,12 @@ const TVGuide = ({navigation}) => {
                 title="Get EPG"
                 style={styles.button}
                 onPress={handleGetEPG}
+             />
+             <Text> Today: {now.toString()} </Text>
+             <FlatList 
+              data={currentEPG}
+              renderItem={renderEPGItem}
+              keyExtractor={(item) => item.ut_start}
              />
         </View>
     )

@@ -17,28 +17,38 @@ const VODScreen = ({navigation}) => {
     const [genres, setGenres] = useState({genres: []});
     const [vodList, setVODList] = useState({rows:[{id:"0", name: "empty", poster: "", genre_str: ""}]});
 
-    let genresUrl = baseUrl + "vod_genres?" + "MWARE_SSID=" + sid; 
-      fetch(genresUrl, {method:'GET'})
+    let genresUrl = baseUrl + "vod_genres?"; 
+    let headers = new Headers();
+        headers.append('Cookie', sid);
+    fetch(genresUrl, {method:'GET'})
           .then(response => response.json())
           .then(json => {
             if(!isGenresLoaded) {
               // console.log('Genres_list from API : ', json);
+              console.log("vod_genres loading");
               setGenres(json);
               setIsGenresLoaded(true);
             }
               
-            });
+            })
+          .catch((error)=>{
+              console.log("vod_genres error", error.message);
+           });
 
-    let vodUrl = baseUrl + "vod_list?" + "MWARE_SSID=" + sid + "&nums=100"; 
+    let vodUrl = baseUrl + "vod_list?" + "&nums=100"; 
             fetch(vodUrl, {method:'GET'})
                 .then(response => response.json())
                 .then(json => {
                   if (!isVODLoaded){
+                    console.log("vod_list loading");
                     // console.log('VOD_list from API : ', json);
                     setVODList(json);
                     setIsVODLoaded(true);
                   }
-                  });
+                  })
+                .catch((error)=>{
+                    console.log("channel_list error", error.message);
+                 });
       
     const renderGenreItem = ({item}) => <View>
                                           <Text> {item.name}</Text>

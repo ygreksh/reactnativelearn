@@ -22,7 +22,8 @@ const VODItemDetails = ({route}) => {
                         headers: headers,})
               .then(response => response.json())
               .then(json => {
-                    console.log('VOD url: ', JSON.stringify(json));
+                    // console.log('VOD url: ', JSON.stringify(json));
+                    console.log("vod_geturl loading");
                     let temp = json.url;
                     let matches = temp.split(' ');
                     let videoUrl = matches[0];
