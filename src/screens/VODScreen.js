@@ -37,8 +37,11 @@ const VODScreen = ({navigation}) => {
     }, []);
     
     useEffect(() => {
-      let vodUrl = baseUrl + "vod_list?" + "&nums=100"; 
-            fetch(vodUrl, {method:'GET'})
+      let vodUrl = baseUrl + "vod_list?" + "&nums=100";
+      let headers = new Headers();
+      headers.append('Cookie', "MWARE_SSID=" + sid); 
+            fetch(vodUrl, {method:'GET',
+                            headers: headers})
                 .then(response => response.json())
                 .then(json => {
                     console.log("vod_list loading");
