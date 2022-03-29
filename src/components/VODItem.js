@@ -10,7 +10,7 @@ const VODItem = ({vodItem}) => {
 
     async function handleOnPress () {
         console.log("Details : " + vodItem.name);
-        console.log("Details JSON : " + JSON.stringify(vodItem));
+        // console.log("Details JSON : " + JSON.stringify(vodItem));
 
         let baseUrl = 'https://online.polbox.tv/api/json/';
         let url = baseUrl + "vod_info?" + "id=" + vodItem.id;
@@ -20,7 +20,8 @@ const VODItem = ({vodItem}) => {
                         headers: headers,})
               .then(response => response.json())
               .then(json => {
-                    console.log('VOD info JSON: ', JSON.stringify(json));
+                    // console.log('VOD info JSON: ', JSON.stringify(json));
+                    console.log("vod_info loading");
                     navigation.navigate("VODItemDetails", {vodInfo: json});
                   });
 

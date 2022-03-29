@@ -46,7 +46,7 @@ const Channel = ({channel}) => {
         console.log("VideoUrl:", videoUrl);
         return videoUrl;
       } else {
-        alert("Error HTT: " + response.status);
+        Alert.alert("Error HTT: " + response.status);
         return null
       }
     }
