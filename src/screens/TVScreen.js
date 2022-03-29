@@ -27,7 +27,7 @@ const TVScreen = ({navigation}) => {
             console.log('channel_list from API : ', json);
             if (hide === 0) {
               setGroups(json.groups);
-            } else setGroups(json.groups.filter((f) => !f.name.toLowerCase().includes("erot")));
+            } else setGroups(json.groups.filter((f) => f.id !== "85"));
           });
     }, 
     // groups
