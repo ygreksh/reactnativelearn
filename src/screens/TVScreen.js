@@ -11,7 +11,6 @@ const TVScreen = ({navigation}) => {
     const sid = useSidStore(state => state.sid);
     const pcode = usePCodeStore(state => state.pcode);
     const hide = useHideStore(state => state.hide);
-    // const [groups, setGroups] = useState();
     const groups = useTVStore (state => state.groups);
     const setGroups = useTVStore (state => state.setGroups);
 
@@ -30,51 +29,11 @@ const TVScreen = ({navigation}) => {
             } else setGroups(json.groups.filter((f) => f.id !== "85"));
           });
     }, 
-    // groups
-    // hide
     [hide]
     );
-       
-  //  const handleGetList = async () => {
-  //   let url = baseUrl + "rule?"+ "cmd=reset_channels" + "&protect_code=" + "785206";
-    
-  //   console.log(url);
-  //   let headers = new Headers();
-  //   headers.append('Cookie', sid);
-  //   let response = await fetch(url, {method:'GET',
-  //                   headers: headers,});
-  //   if (response.ok) {
-  //     let json = await response.json();
-  //     console.log("RULE: get_list:", JSON.stringify(json));
-  //   } else {
-  //     alert("Error HTT: " + response.status);
-  //   }
-  //  }
-
-      // const getAccount = () => {
-      //   let url = baseUrl + "account";
-      //   let headers = new Headers();
-      //   if (sid) {
-      //       console.log('sid now', sid);
-      //       headers.append('Cookie', sid);
-      //     fetch(url, {method:'GET',
-      //               headers: headers,})
-      //     .then(response => response.json())
-      //     .then(json => {
-      //         console.log('GET ACCOUNT: ', json);
-      //         alert(JSON.stringify(json));
-      //         });
-      //     }
-    
-      // }
-
+  
     return (
         <View style={styles.container}>
-          {/* <Button 
-            title="RULE: get_list" 
-            style={styles.button}
-            onPress={handleGetList}
-          /> */}
           <Groups groups={groups}/>
         </View>
     )

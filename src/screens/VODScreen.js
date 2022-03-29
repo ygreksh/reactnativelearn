@@ -66,7 +66,6 @@ const VODScreen = ({navigation}) => {
             />
             <FlatList
                 data={genres.genres}
-                // data={TEST_DATA}
                 renderItem={renderGenreItem}
                 keyExtractor={(item) => item.id}
             />
