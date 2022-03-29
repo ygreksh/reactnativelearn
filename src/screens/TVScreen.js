@@ -15,7 +15,7 @@ const TVScreen = ({navigation}) => {
     const setGroups = useTVStore (state => state.setGroups);
 
     useEffect(() => {
-      let url = baseUrl + "channel_list?" + sid; 
+      let url = baseUrl + "channel_list?"; 
       if (pcode) {
         url += "&protect_code=" + pcode;
       }
@@ -31,7 +31,10 @@ const TVScreen = ({navigation}) => {
             if (hide === 0) {
               setGroups(json.groups);
             } else setGroups(json.groups.filter((f) => f.id !== "85"));
-          });
+          })
+        .catch((error)=>{
+            console.log("vod_genres error", error.message);
+        });
     }, 
     [hide]
     );

@@ -15,23 +15,27 @@ const TVGuide = ({navigation}) => {
     const sid = useSidStore(state => state.sid);
     const [currentEPG, setCurrentEPG] = useState();
     
-    const handleGetEPG = async () => {
+    const handleGetEPG = () => {
         // Alert.alert("Get EPG");
-
-        let url = baseUrl + "epg?"+ "cid=" + 1534 + "&day=290322";
+      let url = baseUrl + "epg?"+ "cid=" + 1534 + "&day=" + dd + mm + yy;
         
-        console.log(url);
-        let headers = new Headers();
-        headers.append('Cookie', sid);
-        let response = await fetch(url, {method:'GET',
-                        headers: headers,});
-        if (response.ok) {
-          let json = await response.json();
-          setCurrentEPG(json.epg);
-          console.log("CurrentEPG :", currentEPG);
-        } else {
-          Alert.alert("Error HTT: " + response.status);
-        }
+      console.log(url);
+      let headers = new Headers();
+      headers.append('Cookie', "MWARE_SSID=" + sid);
+      fetch(url, {method:'GET',
+                        headers: headers})
+            .then(response => response.json())
+            .then(json => {
+                // console.log('Genres_list from API : ', json);
+                console.log("epg loading");
+                setCurrentEPG(json.epg);
+                // setIsGenresLoaded(true);
+                
+              })
+            .catch((error)=>{
+                console.log("epg error", error.message);
+            });
+     
     }
        
     const renderEPGItem = ({item}) => <Text> {item.t_start} : {item.progname} </Text>
