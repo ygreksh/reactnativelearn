@@ -9,46 +9,48 @@ import VODItem from "../components/VODItem";
 const VODScreen = ({navigation}) => {
     let baseUrl = 'http://online.polbox.tv/api/json/';
 
-    const [isGenresLoaded, setIsGenresLoaded] = useState(false);
-    const [isVODLoaded, setIsVODLoaded] = useState(false);
+    // const [isGenresLoaded, setIsGenresLoaded] = useState(false);
+    // const [isVODLoaded, setIsVODLoaded] = useState(false);
 
     const sid = useSidStore(state => state.sid);
 
     const [genres, setGenres] = useState({genres: []});
     const [vodList, setVODList] = useState({rows:[{id:"0", name: "empty", poster: "", genre_str: ""}]});
 
-    let genresUrl = baseUrl + "vod_genres?"; 
-    let headers = new Headers();
-        headers.append('Cookie', sid);
-    fetch(genresUrl, {method:'GET'})
-          .then(response => response.json())
-          .then(json => {
-            if(!isGenresLoaded) {
-              // console.log('Genres_list from API : ', json);
-              console.log("vod_genres loading");
-              setGenres(json);
-              setIsGenresLoaded(true);
-            }
-              
-            })
-          .catch((error)=>{
-              console.log("vod_genres error", error.message);
-           });
-
-    let vodUrl = baseUrl + "vod_list?" + "&nums=100"; 
+    useEffect(() => {
+      let genresUrl = baseUrl + "vod_genres?"; 
+      let headers = new Headers();
+      headers.append('Cookie', "MWARE_SSID=" + sid);
+      fetch(genresUrl, {method:'GET',
+                        headers: headers})
+            .then(response => response.json())
+            .then(json => {
+                // console.log('Genres_list from API : ', json);
+                console.log("vod_genres loading");
+                setGenres(json);
+                // setIsGenresLoaded(true);
+                
+              })
+            .catch((error)=>{
+                console.log("vod_genres error", error.message);
+            });
+    }, [genres]);
+    
+    useEffect(() => {
+      let vodUrl = baseUrl + "vod_list?" + "&nums=100"; 
             fetch(vodUrl, {method:'GET'})
                 .then(response => response.json())
                 .then(json => {
-                  if (!isVODLoaded){
                     console.log("vod_list loading");
                     // console.log('VOD_list from API : ', json);
                     setVODList(json);
-                    setIsVODLoaded(true);
-                  }
+                    // setIsVODLoaded(true);
                   })
                 .catch((error)=>{
-                    console.log("channel_list error", error.message);
+                    console.log("vod_list error", error.message);
                  });
+    }, [vodList]);
+    
       
     const renderGenreItem = ({item}) => <View>
                                           <Text> {item.name}</Text>

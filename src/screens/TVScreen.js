@@ -15,15 +15,19 @@ const TVScreen = ({navigation}) => {
     const setGroups = useTVStore (state => state.setGroups);
 
     useEffect(() => {
-      let url = baseUrl + "channel_list?" + "MWARE_SSID=" + sid; 
+      let url = baseUrl + "channel_list?" + sid; 
       if (pcode) {
         url += "&protect_code=" + pcode;
       }
       console.log(url);
-        fetch(url, {method:'GET'})
+      let headers = new Headers();
+      headers.append('Cookie', "MWARE_SSID=" + sid);
+        fetch(url, {method:'GET',
+                    headers: headers})
         .then(response => response.json())
         .then(json => {
-            console.log('channel_list from API : ', json);
+          // console.log('channel_list from API : ', json);
+          console.log('channel_list loading');
             if (hide === 0) {
               setGroups(json.groups);
             } else setGroups(json.groups.filter((f) => f.id !== "85"));
