@@ -14,7 +14,7 @@ const VODScreen = ({navigation}) => {
 
     const sid = useSidStore(state => state.sid);
 
-    const [genres, setGenres] = useState({genres: []});
+    const [genres, setGenres] = useState();
     const [vodList, setVODList] = useState({rows:[{id:"0", name: "empty", poster: "", genre_str: ""}]});
 
     useEffect(() => {
@@ -27,14 +27,14 @@ const VODScreen = ({navigation}) => {
             .then(json => {
                 // console.log('Genres_list from API : ', json);
                 console.log("vod_genres loading");
-                setGenres(json);
+                setGenres(json.genres);
                 // setIsGenresLoaded(true);
                 
               })
             .catch((error)=>{
                 console.log("vod_genres error", error.message);
             });
-    }, [genres]);
+    }, []);
     
     useEffect(() => {
       let vodUrl = baseUrl + "vod_list?" + "&nums=100"; 
@@ -49,7 +49,7 @@ const VODScreen = ({navigation}) => {
                 .catch((error)=>{
                     console.log("vod_list error", error.message);
                  });
-    }, [vodList]);
+    }, []);
     
       
     const renderGenreItem = ({item}) => <View>
@@ -77,7 +77,7 @@ const VODScreen = ({navigation}) => {
                 keyExtractor={(item) => item.id}
             />
             <FlatList
-                data={genres.genres}
+                data={genres}
                 // data={TEST_DATA}
                 renderItem={renderGenreItem}
                 keyExtractor={(item) => item.id}
