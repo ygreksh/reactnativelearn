@@ -62,7 +62,8 @@ const Channel = ({channel}) => {
       } else {
         videoUrl = videoUrl + ".m3u8";
         navigation.navigate("Player", {
-            url: videoUrl
+            url: videoUrl,
+            channelId: channel.id,
         });
       }
     }
@@ -81,7 +82,8 @@ const Channel = ({channel}) => {
           }
           videoUrl = videoUrl + ".m3u8";
           navigation.navigate("Player", {
-              url: videoUrl
+              url: videoUrl,
+              channelId: channel.id
           });
         }
 

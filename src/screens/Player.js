@@ -11,12 +11,12 @@ const Player = ({route}) => {
     if (mm < 10) mm = "0"+ mm;
     let dd = now.getDate();
     if (dd < 10) dd = "0" + dd;
-    const {url} = route.params;
+    const {url, channelId} = route.params;
     const sid = useSidStore(state => state.sid);
     const [currentEPG, setCurrentEPG] = useState();
 
     useEffect(() => {
-      let url = baseUrl + "epg?"+ "cid=" + 1534 + "&day=" + dd + mm + yy;
+      let url = baseUrl + "epg?"+ "cid=" + channelId + "&day=" + dd + mm + yy;
         
       console.log(url);
       let headers = new Headers();
@@ -64,14 +64,14 @@ const Player = ({route}) => {
               resizeMode={"contain"}
               />
           </View>
-{/*           
-          <Text
-            style={styles.text}
-          >
-          Video: {url}</Text> */}
           <View 
             style={styles.epgcontainer}
             >
+            <Text 
+              style ={styles.text} 
+            > 
+             Channel name: 
+            </Text>
             <Text 
               style ={styles.text} 
             > 
@@ -84,34 +84,6 @@ const Player = ({route}) => {
               renderItem={renderEPGItem}
               keyExtractor={(item) => item.id}
             />
-            <View
-              style={styles.epgrow}
-            >
-              <Text 
-                style ={styles.text} 
-              > 
-                EPG time 
-              </Text>
-              <Text 
-                style ={styles.text} 
-              > 
-                EPG program 
-              </Text>
-            </View>
-            <View
-              style={styles.epgrow}
-            >
-              <Text 
-                style ={styles.text} 
-              > 
-                EPG time 
-              </Text>
-              <Text 
-                style ={styles.text} 
-              > 
-                EPG program 2 
-              </Text>
-            </View>
             <Text 
               style ={styles.text} 
             > 
