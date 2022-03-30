@@ -4,7 +4,7 @@ import Groups from "../components/Groups";
 import { useSidStore, usePCodeStore, useHideStore, useTVStore } from "../store";
 
 
-const TVScreen = ({navigation}) => {
+const TVScreen = () => {
     let baseUrl = 'https://online.polbox.tv/api/json/';
 
 

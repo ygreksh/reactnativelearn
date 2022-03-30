@@ -37,7 +37,7 @@ const VODScreen = ({navigation}) => {
     }, []);
     
     useEffect(() => {
-      let vodUrl = baseUrl + "vod_list?" + "&nums=100";
+      let vodUrl = baseUrl + "vod_list?" + "&nums=50";
       let headers = new Headers();
       headers.append('Cookie', "MWARE_SSID=" + sid); 
             fetch(vodUrl, {method:'GET',

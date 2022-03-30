@@ -16,7 +16,6 @@ const TVGuide = ({navigation}) => {
     const [currentEPG, setCurrentEPG] = useState();
     
     const handleGetEPG = () => {
-        // Alert.alert("Get EPG");
       let url = baseUrl + "epg?"+ "cid=" + 1534 + "&day=" + dd + mm + yy;
         
       console.log(url);
@@ -29,7 +28,6 @@ const TVGuide = ({navigation}) => {
                 // console.log('Genres_list from API : ', json);
                 console.log("epg loading");
                 setCurrentEPG(json.epg);
-                // setIsGenresLoaded(true);
                 
               })
             .catch((error)=>{
