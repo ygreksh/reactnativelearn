@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Text, View, StyleSheet, FlatList } from 'react-native'
+import { Image, Text, View, StyleSheet, FlatList } from 'react-native'
 import Video from 'react-native-video'
 import { useSidStore } from '../store';
 
@@ -11,12 +11,13 @@ const Player = ({route}) => {
     if (mm < 10) mm = "0"+ mm;
     let dd = now.getDate();
     if (dd < 10) dd = "0" + dd;
-    const {url, channelId} = route.params;
+    
+    const {url, channel} = route.params;
     const sid = useSidStore(state => state.sid);
     const [currentEPG, setCurrentEPG] = useState();
 
     useEffect(() => {
-      let url = baseUrl + "epg?"+ "cid=" + channelId + "&day=" + dd + mm + yy;
+      let url = baseUrl + "epg?"+ "cid=" + channel.id + "&day=" + dd + mm + yy;
         
       console.log(url);
       let headers = new Headers();
@@ -39,12 +40,19 @@ const Player = ({route}) => {
                                         style={styles.epgrow}
                                       >
                                         <Text 
-                                          style ={styles.text} 
+                                          style ={{fontSize: 16,
+                                            // color: 'red',
+                                            textAlign: 'center',
+                                            margin: 5,
+                                            fontWeight: 'bold',
+                                          }} 
                                         > 
                                           {item.t_start} 
                                         </Text>
                                         <Text 
-                                          style ={styles.text} 
+                                          style ={{fontSize: 16,
+                                            margin: 5,
+                                          }}  
                                         > 
                                           {item.progname} 
                                         </Text>
@@ -67,13 +75,20 @@ const Player = ({route}) => {
           <View 
             style={styles.epgcontainer}
             >
+            <View style={{flexDirection: 'row', justifyContent: 'center', padding: 10, alignItems: "center"}}
+            >
+              <Image
+                  style={{width: 60, height: 30}}
+                  source={{uri: 'http://online.polbox.tv/' + channel.icon}}
+              />
+              <Text 
+                style={{fontWeight: 'bold', margin: 5}}
+              >
+                        {channel.name}
+              </Text>    
+            </View>
             <Text 
-              style ={styles.text} 
-            > 
-             Channel name: 
-            </Text>
-            <Text 
-              style ={styles.text} 
+              style ={{fontWeight: 'bold', margin: 5, fontSize: 16, textAlign: 'center'}} 
             > 
              Today: {dd} : {mm} : {yy}  
             </Text>
@@ -101,8 +116,8 @@ const styles = StyleSheet.create({
     // alignItems: 'center', 
     justifyContent: 'center',
     // padding: 10,
-    borderWidth: 1,
-    borderColor: 'red'    
+    // borderWidth: 1,
+    // borderColor: 'red'    
   },
   backgroundVideo: {
     position: 'absolute',
@@ -110,34 +125,38 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-    borderWidth: 1
+    // borderWidth: 1
   },
   content: {
     // flex: 1,
     justifyContent: 'center',
-    borderWidth: 1
+    // borderWidth: 1
   },
   text: {
     fontSize: 16,
     // color: 'red',
     textAlign: 'center',
-    // margin: 10,
-    borderWidth: 1
+    margin: 5,
+    // borderWidth: 1
   },
   videocontainer: {
     flex: 1,
     justifyContent: 'center',
-    borderWidth: 1
+    // borderWidth: 1
   },
   epgcontainer: {
     flex: 2,
+    // padding: 10,
+    // margin: 10,
     // justifyContent: 'center',
-    borderWidth: 1
+    // borderWidth: 1
   },
   epgrow: {
     // flex: 1,
     flexDirection: 'row',
     // justifyContent: 'center',
+    // padding: 5,
+    margin: 5,
     borderWidth: 1,
     borderColor: 'orange',
   },
