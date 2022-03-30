@@ -37,7 +37,13 @@ const Player = ({route}) => {
     },[]);
 
     const renderEPGItem = ({item}) => <View
-                                        style={styles.epgrow}
+                                        style={{
+                                          flex: 1,
+                                          flexDirection: 'row',
+                                          margin: 5,
+                                          borderWidth: 1,
+                                          borderColor: '#b0b0b0',
+                                        }}
                                       >
                                         <Text 
                                           style ={{fontSize: 16,
@@ -49,13 +55,20 @@ const Player = ({route}) => {
                                         > 
                                           {item.t_start} 
                                         </Text>
-                                        <Text 
-                                          style ={{fontSize: 16,
-                                            margin: 5,
-                                          }}  
-                                        > 
-                                          {item.progname} 
-                                        </Text>
+                                        <View
+                                          style={{
+                                            flex: 1,
+                                          }}
+                                        >
+                                          <Text 
+                                            style ={{fontSize: 16,
+                                              margin: 5,
+                                            }}  
+                                          > 
+                                            {item.progname} 
+                                          </Text>
+                                        </View>
+                                        
                                       </View>
 
     return(
@@ -75,14 +88,14 @@ const Player = ({route}) => {
           <View 
             style={styles.epgcontainer}
             >
-            <View style={{flexDirection: 'row', justifyContent: 'center', padding: 10, alignItems: "center"}}
+            <View style={{flexDirection: 'row', justifyContent: 'center', padding: 10, alignItems: 'center', backgroundColor: '#a0a0a0',}}
             >
               <Image
                   style={{width: 60, height: 30}}
                   source={{uri: 'http://online.polbox.tv/' + channel.icon}}
               />
               <Text 
-                style={{fontWeight: 'bold', margin: 5}}
+                style={{fontWeight: 'bold', fontSize: 18, margin: 5,}}
               >
                         {channel.name}
               </Text>    
@@ -97,7 +110,7 @@ const Player = ({route}) => {
               data={currentEPG}
               // horizontal={true}
               renderItem={renderEPGItem}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.ut_start}
             />
             <Text 
               style ={styles.text} 
