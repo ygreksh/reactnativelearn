@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Alert, Button, Image, Text, View, StyleSheet, FlatList } from "react-native";
 import Channels from "../components/Channels";
 import Groups from "../components/Groups";
@@ -20,7 +20,18 @@ const TVGuide = ({navigation}) => {
     const [channelId, setCheannelId] = useState();
     const groups = useTVStore (state => state.groups);
     const setGroups = useTVStore (state => state.setGroups);
-
+    // const [allChannels, setAllChannels] = useState();
+    let channels = groups.map(group => group.channels.map(channel => channel.name));
+    let allChannels = null;
+    // allChannels = [].concat(...channels);
+    // console.log("allChannels", channels);
+    // console.log("allChannels", allChannels);
+    useEffect(() => {
+      // channels = groups.map(group => group.channels.map(channel => channel.name));
+      allChannels = [].concat(...channels);
+      // console.log("allChannels", channels);
+      console.log("allChannels", allChannels);
+    }, []);
     // useEffect(() => {
     //   let url = baseUrl + "channel_list?"; 
       
@@ -42,28 +53,29 @@ const TVGuide = ({navigation}) => {
     // []
     // );
     
-    useEffect(() => {
-      let url = baseUrl + "epg?"+ "cid=" + channelId + "&day=" + dd + mm + yy;
+    // useEffect(() => {
+    //   let url = baseUrl + "epg?"+ "cid=" + channelId + "&day=" + dd + mm + yy;
         
-      console.log(url);
-      let headers = new Headers();
-      headers.append('Cookie', "MWARE_SSID=" + sid);
-      fetch(url, {method:'GET',
-                        headers: headers})
-            .then(response => response.json())
-            .then(json => {
-                // console.log('Genres_list from API : ', json);
-                console.log("epg loading");
-                setCurrentEPG(json.epg);
+    //   console.log(url);
+    //   let headers = new Headers();
+    //   headers.append('Cookie', "MWARE_SSID=" + sid);
+    //   fetch(url, {method:'GET',
+    //                     headers: headers})
+    //         .then(response => response.json())
+    //         .then(json => {
+    //             // console.log('Genres_list from API : ', json);
+    //             console.log("epg loading");
+    //             setCurrentEPG(json.epg);
                 
-              })
-            .catch((error)=>{
-                console.log("epg error", error.message);
-            });
+    //           })
+    //         .catch((error)=>{
+    //             console.log("epg error", error.message);
+    //         });
      
-    },[channelId]);
+    // },[channelId]);
 
-    const renderItem = ({item}) => <Channels channels={item}/>
+    // const renderItem = ({item}) => <Channels channels={item}/>
+    const renderItem = ({item}) => <Text> {item} </Text>
        
     const renderEPGItem = ({item}) => <View
                                         style={{
@@ -114,10 +126,12 @@ const TVGuide = ({navigation}) => {
       >
         <View>
             <FlatList
-                data={groups}
+                // data={groups}
+                data={allChannels}
                 // data={hide === 0 ? groups : filteredGroups}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id}
+                horizontal={true}
+                // keyExtractor={(item) => item.id}
             />
         </View>
       <View 

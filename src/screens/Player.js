@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Image, Text, View, StyleSheet, FlatList } from 'react-native'
+import { Image, Text, View, StyleSheet, FlatList, Button } from 'react-native'
 import Video from 'react-native-video'
 import { useSidStore } from '../store';
 
@@ -15,6 +15,10 @@ const Player = ({route}) => {
     const {url, channel} = route.params;
     const sid = useSidStore(state => state.sid);
     const [currentEPG, setCurrentEPG] = useState();
+
+    const getEpgDate = () => {
+
+    }
 
     useEffect(() => {
       let url = baseUrl + "epg?"+ "cid=" + channel.id + "&day=" + dd + mm + yy;
@@ -47,7 +51,6 @@ const Player = ({route}) => {
                                       >
                                         <Text 
                                           style ={{fontSize: 16,
-                                            // color: 'red',
                                             textAlign: 'center',
                                             margin: 5,
                                             fontWeight: 'bold',
@@ -91,7 +94,7 @@ const Player = ({route}) => {
             <View style={{flexDirection: 'row', justifyContent: 'center', padding: 10, alignItems: 'center', backgroundColor: '#a0a0a0',}}
             >
               <Image
-                  style={{width: 60, height: 30}}
+                  style={{width: 40, height: 40, resizeMode: 'contain'}}
                   source={{uri: 'http://online.polbox.tv/' + channel.icon}}
               />
               <Text 
@@ -100,15 +103,26 @@ const Player = ({route}) => {
                         {channel.name}
               </Text>    
             </View>
-            <Text 
-              style ={{fontWeight: 'bold', margin: 5, fontSize: 16, textAlign: 'center'}} 
-            > 
-             Today: {dd} : {mm} : {yy}  
-            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center'
+              }}
+            >
+              <Button 
+                title='<<'
+              />
+              <Text 
+                style ={{fontWeight: 'bold', margin: 5, fontSize: 16, textAlign: 'center'}} 
+              > 
+                Today: {dd} : {mm} : {yy}  
+              </Text>
+              <Button 
+                title='>>'
+              />
+            </View>
             <FlatList
-              // style={{backgroundColor: '#cccccc'}}
               data={currentEPG}
-              // horizontal={true}
               renderItem={renderEPGItem}
               keyExtractor={(item) => item.ut_start}
             />
@@ -126,11 +140,7 @@ const Player = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    // alignItems: 'center', 
     justifyContent: 'center',
-    // padding: 10,
-    // borderWidth: 1,
-    // borderColor: 'red'    
   },
   backgroundVideo: {
     position: 'absolute',
@@ -138,37 +148,24 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-    // borderWidth: 1
   },
   content: {
-    // flex: 1,
     justifyContent: 'center',
-    // borderWidth: 1
   },
   text: {
     fontSize: 16,
-    // color: 'red',
     textAlign: 'center',
     margin: 5,
-    // borderWidth: 1
   },
   videocontainer: {
     flex: 1,
     justifyContent: 'center',
-    // borderWidth: 1
   },
   epgcontainer: {
     flex: 2,
-    // padding: 10,
-    // margin: 10,
-    // justifyContent: 'center',
-    // borderWidth: 1
   },
   epgrow: {
-    // flex: 1,
     flexDirection: 'row',
-    // justifyContent: 'center',
-    // padding: 5,
     margin: 5,
     borderWidth: 1,
     borderColor: 'orange',

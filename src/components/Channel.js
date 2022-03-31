@@ -96,16 +96,23 @@ const Channel = ({channel}) => {
     const containerStyle = {backgroundColor: 'white', padding: 20};
     return(
       <Provider>
-        <View style={{padding: 5, alignItems: "center"}}
+        <View style={{padding: 5, alignItems: "center", alignContent: 'center'}}
             >
                 <TouchableOpacity onPress={handleOnPress}>
                     <Image
-                        style={{width: 60, height: 60}}
+                        style={{width: 60, height: 60, resizeMode: 'contain'}}
                         source={{uri: 'http://online.polbox.tv/' + channel.icon}}
                     />
-                    <Text >
+                    <View style={{
+                      // justifyContent: 'center',
+                      alignItems: 'center'
+                      }}
+                    >
+                      <Text >
                         {channel.name}
-                    </Text>    
+                      </Text>    
+                    </View>
+                    
                 </TouchableOpacity>
         </View>
         <View 
