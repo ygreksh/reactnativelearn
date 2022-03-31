@@ -175,7 +175,7 @@ const TVGuide = ({navigation}) => {
         </View>
       <View 
         style={{
-          flex: 1,
+          flex: 2,
           // padding: 10,
           // margin: 10,
           justifyContent: 'center',
