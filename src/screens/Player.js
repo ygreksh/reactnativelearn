@@ -97,20 +97,38 @@ const Player = ({route}) => {
 
     return(
         <View 
-          style={styles.container}
+          style={{
+            flex: 1, 
+            justifyContent: 'center',
+          }}
           >
           <View
-            style={styles.videocontainer}
+            style={{
+              flex: 1,
+              // width: '100%',
+              // alignContent: 'stretch',
+              justifyContent: 'center',
+              backgroundColor: 'black',
+            }}
           >
             <Video
-              style={styles.backgroundVideo}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0,
+              }}
               source={{uri: url}}
               controls={true}
               resizeMode={"contain"}
               />
           </View>
           <View 
-            style={styles.epgcontainer}
+            style={{
+              flex: 2,
+              justifyContent: 'center',
+            }}
             >
             <View style={{flexDirection: 'row', justifyContent: 'center', padding: 10, alignItems: 'center', backgroundColor: '#a0a0a0',}}
             >
@@ -149,50 +167,10 @@ const Player = ({route}) => {
               renderItem={renderEPGItem}
               keyExtractor={(item) => item.ut_start}
             />
-            {/* <Text 
-              style ={styles.text} 
-            > 
-            EPG controls
-            </Text> */}
           </View>
         </View>
         
     )
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    justifyContent: 'center',
-  },
-  backgroundVideo: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-  },
-  content: {
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 16,
-    textAlign: 'center',
-    margin: 5,
-  },
-  videocontainer: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  epgcontainer: {
-    flex: 2,
-  },
-  epgrow: {
-    flexDirection: 'row',
-    margin: 5,
-    borderWidth: 1,
-    borderColor: 'orange',
-  },
-});
 
 export default Player;
