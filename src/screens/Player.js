@@ -16,15 +16,17 @@ const Player = ({route}) => {
     const [currentEPG, setCurrentEPG] = useState();
 
     const addDay = () => {
-      let newDate = new Date();
+      let newDate = new Date(now);
       newDate.setDate(dateForEPG.getDate() + 1);
+      console.log("current epg date", dateForEPG.toDateString());
       console.log("add newDate", newDate.toDateString());
       // dateForEPG = newDate;
       setDateForEPG(newDate);
     }
     const lessDay = () => {
-      let newDate = new Date();
+      let newDate = new Date(now);
       newDate.setDate(dateForEPG.getDate() - 1);
+      console.log("current epg date", dateForEPG.toDateString());
       console.log("less newDate", newDate.toDateString());
       // dateForEPG = newDate;
       setDateForEPG(newDate);
@@ -50,7 +52,7 @@ const Player = ({route}) => {
             .then(response => response.json())
             .then(json => {
                 // console.log('Genres_list from API : ', json);
-                console.log("epg for "  + dateForEPG.toDateString() +  "loading");
+                console.log("epg for "  + dateForEPG.toDateString() +  " loading");
                 setCurrentEPG(json.epg);
                 
               })
@@ -147,11 +149,11 @@ const Player = ({route}) => {
               renderItem={renderEPGItem}
               keyExtractor={(item) => item.ut_start}
             />
-            <Text 
+            {/* <Text 
               style ={styles.text} 
             > 
             EPG controls
-            </Text>
+            </Text> */}
           </View>
         </View>
         

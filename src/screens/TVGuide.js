@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Alert, Button, Image, Text, View, StyleSheet, FlatList } from "react-native";
+import { Alert, Button, Image, Text, View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import Channels from "../components/Channels";
 import Groups from "../components/Groups";
 import { useSidStore, usePCodeStore, useHideStore, useTVStore } from "../store";
@@ -17,7 +17,7 @@ const TVGuide = ({navigation}) => {
 
     const sid = useSidStore(state => state.sid);
     const [currentEPG, setCurrentEPG] = useState();
-    const [channelId, setCheannelId] = useState();
+    const [channelId, setChannelId] = useState();
     const groups = useTVStore (state => state.groups);
     const setGroups = useTVStore (state => state.setGroups);
     // const [allChannels, setAllChannels] = useState();
@@ -32,51 +32,74 @@ const TVGuide = ({navigation}) => {
       // console.log("allChannels", channels);
       console.log("allChannels", allChannels);
     }, []);
-    // useEffect(() => {
-    //   let url = baseUrl + "channel_list?"; 
-      
-    //   console.log(url);
-    //   let headers = new Headers();
-    //   headers.append('Cookie', "MWARE_SSID=" + sid);
-    //     fetch(url, {method:'GET',
-    //                 headers: headers})
-    //     .then(response => response.json())
-    //     .then(json => {
-    //       // console.log('channel_list from API : ', json);
-    //       console.log('channel_list loading');
-    //           setGroups(json.groups);
-    //       })
-    //     .catch((error)=>{
-    //         console.log("vod_genres error", error.message);
-    //     });
-    // }, 
-    // []
-    // );
     
-    // useEffect(() => {
-    //   let url = baseUrl + "epg?"+ "cid=" + channelId + "&day=" + dd + mm + yy;
+    useEffect(() => {
+      // let url = baseUrl + "epg?"+ "cid=" + channelId + "&day=" + dd + mm + yy;
+      let url = baseUrl + "epg?"+ "cid=" + channelId + "&day=" + dd + mm + yy;
         
-    //   console.log(url);
-    //   let headers = new Headers();
-    //   headers.append('Cookie', "MWARE_SSID=" + sid);
-    //   fetch(url, {method:'GET',
-    //                     headers: headers})
-    //         .then(response => response.json())
-    //         .then(json => {
-    //             // console.log('Genres_list from API : ', json);
-    //             console.log("epg loading");
-    //             setCurrentEPG(json.epg);
+      console.log(url);
+      let headers = new Headers();
+      headers.append('Cookie', "MWARE_SSID=" + sid);
+      fetch(url, {method:'GET',
+                        headers: headers})
+            .then(response => response.json())
+            .then(json => {
+                // console.log('Genres_list from API : ', json);
+                console.log("epg loading");
+                setCurrentEPG(json.epg);
                 
-    //           })
-    //         .catch((error)=>{
-    //             console.log("epg error", error.message);
-    //         });
+              })
+            .catch((error)=>{
+                console.log("epg error", error.message);
+            });
      
-    // },[channelId]);
+    },[channelId]);
 
+    // const handleOnPressChannel = () => {
+    //   console.log("Channel : " + channel.name);
+    //   setChannelId(channelId);
+    // }
     // const renderItem = ({item}) => <Channels channels={item}/>
-    const renderItem = ({item}) => <Text> {item} </Text>
-       
+    const renderGroupItem = ({item}) => <View style={{marginVertical: 5 }}>
+                                      <Text style={{fontSize: 15, fontWeight: "bold"}}>
+                                          {item.name}
+                                      </Text>
+                                      <FlatList
+                                          style={{backgroundColor: '#cccccc'}}
+                                          data={item.channels}
+                                          horizontal={true}
+                                          renderItem={renderChannelsItem}
+                                          keyExtractor={(item) => item.id}
+                                      />
+                                  </View>
+    // const renderItem = ({item}) => <Text> {item} </Text>
+    const renderChannelsItem = ({item}) => <View>
+                                            <View style={{padding: 5, alignItems: "center", alignContent: 'center'}}
+                                                >
+                                                    <TouchableOpacity onPress={()=> {
+                                                                                      console.log();
+                                                                                      setChannelId(item.id);
+                                                                                    }}>
+                                                        <Image
+                                                            style={{width: 60, height: 60, resizeMode: 'contain'}}
+                                                            source={{uri: 'http://online.polbox.tv/' + item.icon}}
+                                                        />
+                                                        <View style={{
+                                                          // justifyContent: 'center',
+                                                          alignItems: 'center'
+                                                          }}
+                                                        >
+                                                          <Text >
+                                                            {item.name}
+                                                          </Text>    
+                                                        </View>
+                                                    </TouchableOpacity>
+                                            </View>
+                                            <View 
+                                              style={styles.centeredView}
+                                            >
+                                          </View>
+                                          </View>   
     const renderEPGItem = ({item}) => <View
                                         style={{
                                           flex: 1,
@@ -88,7 +111,6 @@ const TVGuide = ({navigation}) => {
                                       >
                                         <Text 
                                           style ={{fontSize: 16,
-                                            // color: 'red',
                                             textAlign: 'center',
                                             margin: 5,
                                             fontWeight: 'bold',
@@ -114,6 +136,8 @@ const TVGuide = ({navigation}) => {
     return (
       <View 
       style={{
+        flex: 1,
+        justifyContent: 'center',
         width: '100%',
         // alignItems: 'center',
         backgroundColor: 'white',
@@ -124,19 +148,32 @@ const TVGuide = ({navigation}) => {
         backgroundColor: '#e6e6e6'
       }}
       >
-        <View>
+        <View
+        style={{
+          flex: 1,
+          width: '100%',
+          // alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'white',
+          padding: 10,
+          elevation: 10,
+          borderWidth: 1,
+          borderColor: 'blue',
+          backgroundColor: 'white'
+        }}
+        >
             <FlatList
-                // data={groups}
-                data={allChannels}
+                data={groups}
+                // data={allChannels}
                 // data={hide === 0 ? groups : filteredGroups}
-                renderItem={renderItem}
-                horizontal={true}
-                // keyExtractor={(item) => item.id}
+                renderItem={renderGroupItem}
+                // horizontal={true}
+                keyExtractor={(item) => item.id}
             />
         </View>
       <View 
         style={{
-          // flex: 1,
+          flex: 1,
           // padding: 10,
           // margin: 10,
           justifyContent: 'center',
@@ -157,11 +194,6 @@ const TVGuide = ({navigation}) => {
           renderItem={renderEPGItem}
           keyExtractor={(item) => item.ut_start}
         />
-        <Text 
-          style ={styles.text} 
-        > 
-        EPG controls
-        </Text>
       </View>
     </View>
     )
