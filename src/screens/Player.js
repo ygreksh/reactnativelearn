@@ -6,22 +6,41 @@ import { useSidStore } from '../store';
 const Player = ({route}) => {
   let baseUrl = 'https://online.polbox.tv/api/json/';
     let now = new Date();
-    let yy = now.getFullYear() % 100;
-    let mm = now.getMonth() + 1;
-    if (mm < 10) mm = "0"+ mm;
-    let dd = now.getDate();
-    if (dd < 10) dd = "0" + dd;
+    // let dateForEPG = now;
+    const [dateForEPG, setDateForEPG] = useState(now);
+    // console.log(now);
+    // console.log(now.toDateString());
     
     const {url, channel} = route.params;
     const sid = useSidStore(state => state.sid);
     const [currentEPG, setCurrentEPG] = useState();
 
-    const getEpgDate = () => {
+    const addDay = () => {
+      let newDate = new Date();
+      newDate.setDate(dateForEPG.getDate() + 1);
+      console.log("add newDate", newDate.toDateString());
+      // dateForEPG = newDate;
+      setDateForEPG(newDate);
+    }
+    const lessDay = () => {
+      let newDate = new Date();
+      newDate.setDate(dateForEPG.getDate() - 1);
+      console.log("less newDate", newDate.toDateString());
+      // dateForEPG = newDate;
+      setDateForEPG(newDate);
+    }
 
+    const getEpgDate = (date) => {
+      let yy = date.getFullYear() % 100;
+      let mm = date.getMonth() + 1;
+      if (mm < 10) mm = "0"+ mm;
+      let dd = date.getDate();
+      if (dd < 10) dd = "0" + dd;
+      return String(dd) + String(mm) + String(yy);
     }
 
     useEffect(() => {
-      let url = baseUrl + "epg?"+ "cid=" + channel.id + "&day=" + dd + mm + yy;
+      let url = baseUrl + "epg?"+ "cid=" + channel.id + "&day=" + getEpgDate(dateForEPG);
         
       console.log(url);
       let headers = new Headers();
@@ -31,14 +50,14 @@ const Player = ({route}) => {
             .then(response => response.json())
             .then(json => {
                 // console.log('Genres_list from API : ', json);
-                console.log("epg loading");
+                console.log("epg for "  + dateForEPG.toDateString() +  "loading");
                 setCurrentEPG(json.epg);
                 
               })
             .catch((error)=>{
                 console.log("epg error", error.message);
             });
-    },[]);
+    },[dateForEPG]);
 
     const renderEPGItem = ({item}) => <View
                                         style={{
@@ -111,14 +130,16 @@ const Player = ({route}) => {
             >
               <Button 
                 title='<<'
+                onPress={lessDay}
               />
               <Text 
                 style ={{fontWeight: 'bold', margin: 5, fontSize: 16, textAlign: 'center'}} 
               > 
-                Today: {dd} : {mm} : {yy}  
+                Day: {dateForEPG.toDateString()}
               </Text>
               <Button 
                 title='>>'
+                onPress={addDay}
               />
             </View>
             <FlatList
