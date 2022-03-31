@@ -18,6 +18,7 @@ const TVGuide = ({navigation}) => {
     const sid = useSidStore(state => state.sid);
     const [currentEPG, setCurrentEPG] = useState();
     const [channelId, setChannelId] = useState();
+    const [selectedChannel, setSelectedChannel] = useState({name: "empty", icon: null});
     const groups = useTVStore (state => state.groups);
     const setGroups = useTVStore (state => state.setGroups);
     // const [allChannels, setAllChannels] = useState();
@@ -35,7 +36,7 @@ const TVGuide = ({navigation}) => {
     
     useEffect(() => {
       // let url = baseUrl + "epg?"+ "cid=" + channelId + "&day=" + dd + mm + yy;
-      let url = baseUrl + "epg?"+ "cid=" + channelId + "&day=" + dd + mm + yy;
+      let url = baseUrl + "epg?"+ "cid=" + selectedChannel.id + "&day=" + dd + mm + yy;
         
       console.log(url);
       let headers = new Headers();
@@ -53,7 +54,7 @@ const TVGuide = ({navigation}) => {
                 console.log("epg error", error.message);
             });
      
-    },[channelId]);
+    },[selectedChannel]);
 
     // const handleOnPressChannel = () => {
     //   console.log("Channel : " + channel.name);
@@ -77,16 +78,17 @@ const TVGuide = ({navigation}) => {
                                             <View style={{padding: 5, alignItems: "center", alignContent: 'center'}}
                                                 >
                                                     <TouchableOpacity onPress={()=> {
-                                                                                      console.log();
-                                                                                      setChannelId(item.id);
+                                                                                      console.log("Select channel", item.name);
+                                                                                      setSelectedChannel(item);
                                                                                     }}>
                                                         <Image
                                                             style={{width: 60, height: 60, resizeMode: 'contain'}}
                                                             source={{uri: 'http://online.polbox.tv/' + item.icon}}
                                                         />
                                                         <View style={{
+                                                          // flex: 1,
                                                           // justifyContent: 'center',
-                                                          alignItems: 'center'
+                                                          // alignItems: 'center'
                                                           }}
                                                         >
                                                           <Text >
@@ -182,6 +184,18 @@ const TVGuide = ({navigation}) => {
           // backgroundColor: 'white',
         }}
         >
+        <View style={{flexDirection: 'row', justifyContent: 'center', padding: 10, alignItems: 'center', backgroundColor: '#a0a0a0',}}
+            >
+              <Image
+                  style={{width: 40, height: 40, resizeMode: 'contain'}}
+                  source={{uri: 'http://online.polbox.tv/' + selectedChannel.icon}}
+              />
+              <Text 
+                style={{fontWeight: 'bold', fontSize: 18, margin: 5,}}
+              >
+                        {selectedChannel.name}
+              </Text>    
+            </View>
         <Text 
           style ={{fontWeight: 'bold', margin: 5, fontSize: 16, textAlign: 'center'}} 
         > 
