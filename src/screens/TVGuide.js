@@ -22,11 +22,33 @@ const TVGuide = ({navigation}) => {
     const [currentEPG, setCurrentEPG] = useState();
     const [selectedChannel, setSelectedChannel] = useState({name: "", icon: null});
     const groups = useTVStore (state => state.groups);
-    
+
+    async function getUrl(id, code) {
+      let url = baseUrl + "get_url?"+ "cid=" + id;
+      if (code !== undefined) {
+        url +=  "&protect_code=" + code;
+      }
+      console.log(url);
+      let headers = new Headers();
+      headers.append('Cookie', sid);
+      let response = await fetch(url, {method:'GET',
+                      headers: headers,});
+      if (response.ok) {
+        let json = await response.json();
+        let temp = json.url.replace("http/ts", "http");
+        let matches = temp.split(' ');
+        let videoUrl = matches[0];
+        console.log("VideoUrl:", videoUrl);
+        return videoUrl;
+      } else {
+        Alert.alert("Error HTT: " + response.status);
+        return null
+      }
+    }
     useEffect(() => {
       let url = baseUrl + "epg?"+ "cid=" + selectedChannel.id + "&day=" + getEpgDate(dateForEPG);
         
-      console.log(url);
+      // console.log(url);
       let headers = new Headers();
       headers.append('Cookie', "MWARE_SSID=" + sid);
       fetch(url, {method:'GET',
@@ -34,7 +56,7 @@ const TVGuide = ({navigation}) => {
             .then(response => response.json())
             .then(json => {
                 // console.log('Genres_list from API : ', json);
-                console.log("epg loading");
+                // console.log("epg loading");
                 setCurrentEPG(json.epg);
                 
               })
@@ -69,7 +91,7 @@ const TVGuide = ({navigation}) => {
                                             <View style={{padding: 5, alignItems: "center", alignContent: 'center'}}
                                                 >
                                                     <TouchableOpacity onPress={()=> {
-                                                                                      console.log("Select channel", item.name);
+                                                                                      // console.log("Select channel", item.name);
                                                                                       setSelectedChannel(item);
                                                                                     }}>
                                                         <Image
@@ -110,9 +132,6 @@ const TVGuide = ({navigation}) => {
                                           >
                                             <TouchableOpacity onPress={
                                                                        () => {
-                                                                        console.log("Select date", item.toDateString());
-                                                                        console.log("now date", now.toDateString());
-                                                                        console.log("item === now ? is", item === now);
                                                                         setDateForEPG(item);
                                                                        }
                                                                             }>
@@ -123,7 +142,20 @@ const TVGuide = ({navigation}) => {
                                             </Text>
                                             </TouchableOpacity>
                                           </View>
-    const renderEPGItem = ({item}) => <View
+    const renderEPGItem = ({item}) => <TouchableOpacity 
+                                        onPress={async () => {
+                                          // console.log("Select Epg", item.t_start, item.ut_start, item.progname)
+                                          let videoUrl = await getUrl(selectedChannel.id + "&gmt=" + item.ut_start);
+                                          // console.log("VideoUrl =", videoUrl);
+                                          // setPcode(code);
+                                              videoUrl = videoUrl + ".m3u8";
+                                              navigation.navigate("Player", {
+                                                  url: videoUrl,
+                                                  channel: selectedChannel,
+                                              });
+                                        }}
+                                      >
+                                        <View
                                         style={{
                                           flex: 1,
                                           flexDirection: 'row',
@@ -131,7 +163,9 @@ const TVGuide = ({navigation}) => {
                                           borderWidth: 1,
                                           borderColor: '#b0b0b0',
                                         }}
+                                        
                                       >
+                                        
                                         <Text 
                                           style ={{fontSize: 16,
                                             textAlign: 'center',
@@ -154,8 +188,8 @@ const TVGuide = ({navigation}) => {
                                             {item.progname} 
                                           </Text>
                                         </View>
-                                        
                                       </View>
+                                      </TouchableOpacity>
     return (
       <View 
       style={{
@@ -223,7 +257,7 @@ const TVGuide = ({navigation}) => {
             data={daysEPG}
             horizontal={true}
             renderItem={renderDaysEPGItem}
-            initialScrollIndex={1}
+            initialScrollIndex={3}
           />  
         </View>
         

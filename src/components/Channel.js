@@ -60,7 +60,7 @@ const Channel = ({channel}) => {
         Alert.alert("Wrong code!");
         setModalVisible(false);
       } else {
-        videoUrl = videoUrl + ".m3u8";
+        // videoUrl = videoUrl + ".m3u8";
         navigation.navigate("Player", {
             url: videoUrl,
             channel: channel,
