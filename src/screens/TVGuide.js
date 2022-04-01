@@ -16,15 +16,14 @@ const TVGuide = ({navigation}) => {
       daysEPG.push(newDate);
     }
     // console.log(daysEPG.map(date => date.toDateString()));
-    
 
     const [dateForEPG, setDateForEPG] = useState(now);
-
+    // const [nowStyle, setNowStyle] = useState();
     const sid = useSidStore(state => state.sid);
     const [currentEPG, setCurrentEPG] = useState();
     const [selectedChannel, setSelectedChannel] = useState({name: "", icon: null});
     const groups = useTVStore (state => state.groups);
-    const setGroups = useTVStore (state => state.setGroups);
+    // const setGroups = useTVStore (state => state.setGroups);
     
     //списиок имен всех каналов в одном массиве
     // let channels = groups.map(group => group.channels.map(channel => channel.name));
@@ -33,6 +32,7 @@ const TVGuide = ({navigation}) => {
     //   allChannels = [].concat(...channels);
       // console.log("allChannels", allChannels);
     // }, []);
+
     
     useEffect(() => {
       let url = baseUrl + "epg?"+ "cid=" + selectedChannel.id + "&day=" + getEpgDate(dateForEPG);
@@ -105,26 +105,31 @@ const TVGuide = ({navigation}) => {
                                             >
                                           </View>
                                           </View>   
+
+    
+
     const renderDaysEPGItem = ({item}) => <View
                                             style={{
-                                                    flex: 1,
-                                                    justifyContent: 'center',
-                                                    padding: 5,
-                                                    margin: 5,
-                                                    borderWidth: 1,
-                                                    borderColor: 'grey',
-                                                    borderRadius: 5,
-                                                    backgroundColor: (item === now)? 'pink' : 'white'
-                                                  }}
+                                              flex: 1,
+                                              justifyContent: 'center',
+                                              padding: 5,
+                                              margin: 5,
+                                              borderWidth: 2,
+                                              borderColor: item.setHours(0,0,0,0) === dateForEPG.setHours(0,0,0,0) ? 'red' : 'white',
+                                              borderRadius: 10,
+                                              backgroundColor: item.setHours(0,0,0,0) === now.setHours(0,0,0,0) ? 'pink' : 'white'
+                                            }}
                                           >
                                             <TouchableOpacity onPress={
                                                                        () => {
                                                                         console.log("Select date", item.toDateString());
+                                                                        console.log("now date", now.toDateString());
+                                                                        console.log("item === now ? is", item === now);
                                                                         setDateForEPG(item);
                                                                        }
                                                                             }>
                                             <Text 
-                                              style ={{fontWeight: 'bold', margin: 5, fontSize: 16, textAlign: 'center'}} 
+                                              style ={{ margin: 5, fontSize: 16, textAlign: 'center'}} 
                                             > 
                                             {item.toDateString()}  
                                             </Text>
