@@ -18,21 +18,10 @@ const TVGuide = ({navigation}) => {
     // console.log(daysEPG.map(date => date.toDateString()));
 
     const [dateForEPG, setDateForEPG] = useState(now);
-    // const [nowStyle, setNowStyle] = useState();
     const sid = useSidStore(state => state.sid);
     const [currentEPG, setCurrentEPG] = useState();
     const [selectedChannel, setSelectedChannel] = useState({name: "", icon: null});
     const groups = useTVStore (state => state.groups);
-    // const setGroups = useTVStore (state => state.setGroups);
-    
-    //списиок имен всех каналов в одном массиве
-    // let channels = groups.map(group => group.channels.map(channel => channel.name));
-    // let allChannels = null;
-    // useEffect(() => {
-    //   allChannels = [].concat(...channels);
-      // console.log("allChannels", allChannels);
-    // }, []);
-
     
     useEffect(() => {
       let url = baseUrl + "epg?"+ "cid=" + selectedChannel.id + "&day=" + getEpgDate(dateForEPG);
@@ -76,7 +65,6 @@ const TVGuide = ({navigation}) => {
                                           keyExtractor={(item) => item.id}
                                       />
                                   </View>
-    // const renderItem = ({item}) => <Text> {item} </Text>
     const renderChannelsItem = ({item}) => <View>
                                             <View style={{padding: 5, alignItems: "center", alignContent: 'center'}}
                                                 >
@@ -199,22 +187,16 @@ const TVGuide = ({navigation}) => {
         >
             <FlatList
                 data={groups}
-                // data={allChannels}
-                // data={hide === 0 ? groups : filteredGroups}
                 renderItem={renderGroupItem}
-                // horizontal={true}
                 keyExtractor={(item) => item.id}
             />
         </View>
       <View 
         style={{
           flex: 2,
-          // padding: 10,
-          // margin: 10,
           justifyContent: 'center',
           borderWidth: 1,
           borderColor: 'orange',
-          // backgroundColor: 'white',
         }}
         >
         <View style={{flexDirection: 'row', justifyContent: 'center', padding: 10, alignItems: 'center', backgroundColor: '#a0a0a0',}}
@@ -241,7 +223,7 @@ const TVGuide = ({navigation}) => {
             data={daysEPG}
             horizontal={true}
             renderItem={renderDaysEPGItem}
-            // keyExtractor={(item) => item.ut_start}
+            initialScrollIndex={1}
           />  
         </View>
         
@@ -253,7 +235,6 @@ const TVGuide = ({navigation}) => {
         <FlatList
           style={{backgroundColor: 'white'}}
           data={currentEPG}
-          // horizontal={true}
           renderItem={renderEPGItem}
           keyExtractor={(item) => item.ut_start}
         />
