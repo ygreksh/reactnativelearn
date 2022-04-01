@@ -9,34 +9,33 @@ const TVGuide = ({navigation}) => {
     let baseUrl = 'https://online.polbox.tv/api/json/';
 
     let now = new Date();
-    let yy = now.getFullYear() % 100;
-    let mm = now.getMonth() + 1;
-    if (mm < 10) mm = "0"+ mm;
-    let dd = now.getDate();
-    if (dd < 10) dd = "0" + dd;
+    let daysEPG = [];
+    for (let i= -4; i <= 4; i++) {
+      let newDate = new Date(now);
+      newDate.setDate(now.getDate() + i);
+      daysEPG.push(newDate);
+    }
+    // console.log(daysEPG.map(date => date.toDateString()));
+    
+
+    const [dateForEPG, setDateForEPG] = useState(now);
 
     const sid = useSidStore(state => state.sid);
     const [currentEPG, setCurrentEPG] = useState();
-    const [channelId, setChannelId] = useState();
-    const [selectedChannel, setSelectedChannel] = useState({name: "empty", icon: null});
+    const [selectedChannel, setSelectedChannel] = useState({name: "", icon: null});
     const groups = useTVStore (state => state.groups);
     const setGroups = useTVStore (state => state.setGroups);
-    // const [allChannels, setAllChannels] = useState();
-    let channels = groups.map(group => group.channels.map(channel => channel.name));
-    let allChannels = null;
-    // allChannels = [].concat(...channels);
-    // console.log("allChannels", channels);
-    // console.log("allChannels", allChannels);
-    useEffect(() => {
-      // channels = groups.map(group => group.channels.map(channel => channel.name));
-      allChannels = [].concat(...channels);
-      // console.log("allChannels", channels);
-      console.log("allChannels", allChannels);
-    }, []);
+    
+    //списиок имен всех каналов в одном массиве
+    // let channels = groups.map(group => group.channels.map(channel => channel.name));
+    // let allChannels = null;
+    // useEffect(() => {
+    //   allChannels = [].concat(...channels);
+      // console.log("allChannels", allChannels);
+    // }, []);
     
     useEffect(() => {
-      // let url = baseUrl + "epg?"+ "cid=" + channelId + "&day=" + dd + mm + yy;
-      let url = baseUrl + "epg?"+ "cid=" + selectedChannel.id + "&day=" + dd + mm + yy;
+      let url = baseUrl + "epg?"+ "cid=" + selectedChannel.id + "&day=" + getEpgDate(dateForEPG);
         
       console.log(url);
       let headers = new Headers();
@@ -54,13 +53,17 @@ const TVGuide = ({navigation}) => {
                 console.log("epg error", error.message);
             });
      
-    },[selectedChannel]);
+    },[selectedChannel, dateForEPG]);
 
-    // const handleOnPressChannel = () => {
-    //   console.log("Channel : " + channel.name);
-    //   setChannelId(channelId);
-    // }
-    // const renderItem = ({item}) => <Channels channels={item}/>
+    const getEpgDate = (date) => {
+      let yy = date.getFullYear() % 100;
+      let mm = date.getMonth() + 1;
+      if (mm < 10) mm = "0"+ mm;
+      let dd = date.getDate();
+      if (dd < 10) dd = "0" + dd;
+      return String(dd) + String(mm) + String(yy);
+    }
+
     const renderGroupItem = ({item}) => <View style={{marginVertical: 5 }}>
                                       <Text style={{fontSize: 15, fontWeight: "bold"}}>
                                           {item.name}
@@ -102,6 +105,31 @@ const TVGuide = ({navigation}) => {
                                             >
                                           </View>
                                           </View>   
+    const renderDaysEPGItem = ({item}) => <View
+                                            style={{
+                                                    flex: 1,
+                                                    justifyContent: 'center',
+                                                    padding: 5,
+                                                    margin: 5,
+                                                    borderWidth: 1,
+                                                    borderColor: 'grey',
+                                                    borderRadius: 5,
+                                                    backgroundColor: (item === now)? 'pink' : 'white'
+                                                  }}
+                                          >
+                                            <TouchableOpacity onPress={
+                                                                       () => {
+                                                                        console.log("Select date", item.toDateString());
+                                                                        setDateForEPG(item);
+                                                                       }
+                                                                            }>
+                                            <Text 
+                                              style ={{fontWeight: 'bold', margin: 5, fontSize: 16, textAlign: 'center'}} 
+                                            > 
+                                            {item.toDateString()}  
+                                            </Text>
+                                            </TouchableOpacity>
+                                          </View>
     const renderEPGItem = ({item}) => <View
                                         style={{
                                           flex: 1,
@@ -195,11 +223,27 @@ const TVGuide = ({navigation}) => {
               >
                         {selectedChannel.name}
               </Text>    
-            </View>
+        </View>
+        <View
+          style={{
+            backgroundColor: 'white'
+        }}
+        >
+          <FlatList
+            style={{
+                    backgroundColor: 'white'
+                  }}
+            data={daysEPG}
+            horizontal={true}
+            renderItem={renderDaysEPGItem}
+            // keyExtractor={(item) => item.ut_start}
+          />  
+        </View>
+        
         <Text 
           style ={{fontWeight: 'bold', margin: 5, fontSize: 16, textAlign: 'center'}} 
         > 
-         Today: {dd} : {mm} : {yy}  
+         {dateForEPG.toDateString()}  
         </Text>
         <FlatList
           style={{backgroundColor: 'white'}}
