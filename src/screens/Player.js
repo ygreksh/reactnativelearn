@@ -16,7 +16,7 @@ const Player = ({route}) => {
     const [currentEPG, setCurrentEPG] = useState();
 
     const addDay = () => {
-      let newDate = new Date(now);
+      let newDate = new Date(dateForEPG);
       newDate.setDate(dateForEPG.getDate() + 1);
       console.log("current epg date", dateForEPG.toDateString());
       console.log("add newDate", newDate.toDateString());
@@ -24,7 +24,7 @@ const Player = ({route}) => {
       setDateForEPG(newDate);
     }
     const lessDay = () => {
-      let newDate = new Date(now);
+      let newDate = new Date(dateForEPG);
       newDate.setDate(dateForEPG.getDate() - 1);
       console.log("current epg date", dateForEPG.toDateString());
       console.log("less newDate", newDate.toDateString());
