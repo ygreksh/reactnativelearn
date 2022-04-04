@@ -61,7 +61,7 @@ const Channel = ({channel}) => {
         setModalVisible(false);
       } else {
         // videoUrl = videoUrl + ".m3u8";
-        navigation.navigate("Player", {
+        navigation.navigate("ChannelPlayer", {
             url: videoUrl,
             channel: channel,
         });

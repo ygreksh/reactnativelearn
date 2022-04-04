@@ -1,6 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Login, Player, Settings, VODItemDetails, ParentalControl } from "../screens";
+import { Login, Player, Settings, VODItemDetails, ParentalControl, ChannelPlayer } from "../screens";
 import DrawerNavigator from "./DrawerNavigator";
 
 
@@ -23,6 +23,7 @@ export default function StackNavigator() {
           },
         }} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="ChannelPlayer" component={ChannelPlayer} />
         <Stack.Screen name="Player" component={Player} />
         <Stack.Screen name="VODItemDetails" component={VODItemDetails} />
         <Stack.Screen name="Settings" component={Settings} />

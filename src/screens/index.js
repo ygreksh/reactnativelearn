@@ -7,5 +7,6 @@ import TVScreen from "./TVScreen";
 import VODScreen from "./VODScreen";
 import VODItemDetails from "./VODItemDetails";
 import TVGuide from "./TVGuide";
+import ChannelPlayer from "./ChannelPlayer";
 
-export { Login, Drawer, ParentalControl, Player, Settings, TVScreen, VODScreen, VODItemDetails, TVGuide }
+export { Login, Drawer, ParentalControl, Player, Settings, TVScreen, VODScreen, VODItemDetails, TVGuide, ChannelPlayer }
