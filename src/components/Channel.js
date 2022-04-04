@@ -61,7 +61,7 @@ const Channel = ({channel}) => {
         setModalVisible(false);
       } else {
         // videoUrl = videoUrl + ".m3u8";
-        navigation.navigate("ChannelPlayer", {
+        navigation.navigate("Channel Player", {
             url: videoUrl,
             channel: channel,
         });
@@ -81,7 +81,7 @@ const Channel = ({channel}) => {
             // resetPCode();
           }
           videoUrl = videoUrl + ".m3u8";
-          navigation.navigate("Player", {
+          navigation.navigate("Channel Player", {
               url: videoUrl,
               channel: channel,
           });

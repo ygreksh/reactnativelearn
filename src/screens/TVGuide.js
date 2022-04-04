@@ -148,8 +148,8 @@ const TVGuide = ({navigation}) => {
                                           let videoUrl = await getUrl(selectedChannel.id + "&gmt=" + item.ut_start);
                                           // console.log("VideoUrl =", videoUrl);
                                           // setPcode(code);
-                                              videoUrl = videoUrl + ".m3u8";
-                                              navigation.navigate("Player", {
+                                              // videoUrl = videoUrl + ".m3u8";
+                                              navigation.navigate("Channel Player", {
                                                   url: videoUrl,
                                                   channel: selectedChannel,
                                               });

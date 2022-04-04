@@ -23,7 +23,7 @@ export default function StackNavigator() {
           },
         }} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="ChannelPlayer" component={ChannelPlayer} />
+        <Stack.Screen name="Channel Player" component={ChannelPlayer} />
         <Stack.Screen name="Player" component={Player} />
         <Stack.Screen name="VODItemDetails" component={VODItemDetails} />
         <Stack.Screen name="Settings" component={Settings} />

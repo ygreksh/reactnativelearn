@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import { Image, Text, View, StyleSheet, FlatList, Button } from 'react-native'
+import { Image, Text, View, StyleSheet, FlatList, Button, TouchableOpacity } from 'react-native'
 import Video from 'react-native-video'
 import { useSidStore } from '../store';
 
-const ChannelPlayer = ({route}) => {
+const ChannelPlayer = ({route, navigation}) => {
   let baseUrl = 'https://online.polbox.tv/api/json/';
     let now = new Date();
-    // let dateForEPG = now;
+    let daysEPG = [];
+    for (let i= -4; i <= 4; i++) {
+      let newDate = new Date(now);
+      newDate.setDate(now.getDate() + i);
+      daysEPG.push(newDate);
+    }
     const [dateForEPG, setDateForEPG] = useState(now);
     // console.log(now);
     // console.log(now.toDateString());
@@ -15,22 +20,28 @@ const ChannelPlayer = ({route}) => {
     const sid = useSidStore(state => state.sid);
     const [currentEPG, setCurrentEPG] = useState();
 
-    const addDay = () => {
-      let newDate = new Date(dateForEPG);
-      newDate.setDate(dateForEPG.getDate() + 1);
-      // console.log("current epg date", dateForEPG.toDateString());
-      // console.log("add newDate", newDate.toDateString());
-      // dateForEPG = newDate;
-      setDateForEPG(newDate);
-    }
-    const lessDay = () => {
-      let newDate = new Date(dateForEPG);
-      newDate.setDate(dateForEPG.getDate() - 1);
-      // console.log("current epg date", dateForEPG.toDateString());
-      // console.log("less newDate", newDate.toDateString());
-      // dateForEPG = newDate;
-      setDateForEPG(newDate);
-    }
+    async function getUrl(id, code) {
+        let url = baseUrl + "get_url?"+ "cid=" + id;
+        if (code !== undefined) {
+          url +=  "&protect_code=" + code;
+        }
+        console.log(url);
+        let headers = new Headers();
+        headers.append('Cookie', sid);
+        let response = await fetch(url, {method:'GET',
+                        headers: headers,});
+        if (response.ok) {
+          let json = await response.json();
+          let temp = json.url.replace("http/ts", "http");
+          let matches = temp.split(' ');
+          let videoUrl = matches[0];
+          console.log("VideoUrl:", videoUrl);
+          return videoUrl;
+        } else {
+          Alert.alert("Error HTT: " + response.status);
+          return null
+        }
+      }
 
     const getEpgDate = (date) => {
       let yy = date.getFullYear() % 100;
@@ -61,7 +72,79 @@ const ChannelPlayer = ({route}) => {
             });
     },[dateForEPG]);
 
-    const renderEPGItem = ({item}) => <View
+    // const renderEPGItem = ({item}) => <View
+    //                                     style={{
+    //                                       flex: 1,
+    //                                       flexDirection: 'row',
+    //                                       margin: 5,
+    //                                       borderWidth: 1,
+    //                                       borderColor: '#b0b0b0',
+    //                                     }}
+    //                                   >
+    //                                     <Text 
+    //                                       style ={{fontSize: 16,
+    //                                         textAlign: 'center',
+    //                                         margin: 5,
+    //                                         fontWeight: 'bold',
+    //                                       }} 
+    //                                     > 
+    //                                       {item.t_start} 
+    //                                     </Text>
+    //                                     <View
+    //                                       style={{
+    //                                         flex: 1,
+    //                                       }}
+    //                                     >
+    //                                       <Text 
+    //                                         style ={{fontSize: 16,
+    //                                           margin: 5,
+    //                                         }}  
+    //                                       > 
+    //                                         {item.progname} 
+    //                                       </Text>
+    //                                     </View>
+                                        
+    //                                   </View>
+    const renderDaysEPGItem = ({item}) => <View
+                                                style={{
+                                                flex: 1,
+                                                justifyContent: 'center',
+                                                padding: 5,
+                                                margin: 5,
+                                                borderWidth: 2,
+                                                borderColor: item.setHours(0,0,0,0) === dateForEPG.setHours(0,0,0,0) ? 'red' : 'white',
+                                                borderRadius: 10,
+                                                backgroundColor: item.setHours(0,0,0,0) === now.setHours(0,0,0,0) ? 'pink' : 'white'
+                                                }}
+                                            >
+                                                <TouchableOpacity onPress={
+                                                                        () => {
+                                                                            setDateForEPG(item);
+                                                                        }
+                                                                                }>
+                                                <Text 
+                                                style ={{ margin: 5, fontSize: 16, textAlign: 'center'}} 
+                                                > 
+                                                {item.toDateString()}  
+                                                </Text>
+                                                </TouchableOpacity>
+                                            </View>
+
+
+    const renderEPGItem = ({item}) => <TouchableOpacity 
+                                        onPress={async () => {
+                                          // console.log("Select Epg", item.t_start, item.ut_start, item.progname)
+                                          let videoUrl = await getUrl(channel.id + "&gmt=" + item.ut_start);
+                                          // console.log("VideoUrl =", videoUrl);
+                                          // setPcode(code);
+                                            //   videoUrl = videoUrl + ".m3u8";
+                                              navigation.navigate("Channel Player", {
+                                                  url: videoUrl,
+                                                  channel: channel,
+                                              });
+                                        }}
+                                      >
+                                        <View
                                         style={{
                                           flex: 1,
                                           flexDirection: 'row',
@@ -69,7 +152,9 @@ const ChannelPlayer = ({route}) => {
                                           borderWidth: 1,
                                           borderColor: '#b0b0b0',
                                         }}
+                                        
                                       >
+                                        
                                         <Text 
                                           style ={{fontSize: 16,
                                             textAlign: 'center',
@@ -92,8 +177,8 @@ const ChannelPlayer = ({route}) => {
                                             {item.progname} 
                                           </Text>
                                         </View>
-                                        
                                       </View>
+                                      </TouchableOpacity>
 
     return(
         <View 
@@ -125,12 +210,14 @@ const ChannelPlayer = ({route}) => {
               />
           </View>
           <View 
-            style={{
-              flex: 2,
-              justifyContent: 'center',
-            }}
-            >
-            <View style={{flexDirection: 'row', justifyContent: 'center', padding: 10, alignItems: 'center', backgroundColor: '#a0a0a0',}}
+        style={{
+          flex: 2,
+          justifyContent: 'center',
+          borderWidth: 1,
+          borderColor: 'orange',
+        }}
+        >
+        <View style={{flexDirection: 'row', justifyContent: 'center', padding: 10, alignItems: 'center', backgroundColor: '#a0a0a0',}}
             >
               <Image
                   style={{width: 40, height: 40, resizeMode: 'contain'}}
@@ -141,33 +228,35 @@ const ChannelPlayer = ({route}) => {
               >
                         {channel.name}
               </Text>    
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center'
-              }}
-            >
-              <Button 
-                title='<<'
-                onPress={lessDay}
-              />
-              <Text 
-                style ={{fontWeight: 'bold', margin: 5, fontSize: 16, textAlign: 'center'}} 
-              > 
-                Day: {dateForEPG.toDateString()}
-              </Text>
-              <Button 
-                title='>>'
-                onPress={addDay}
-              />
-            </View>
-            <FlatList
-              data={currentEPG}
-              renderItem={renderEPGItem}
-              keyExtractor={(item) => item.ut_start}
-            />
-          </View>
+        </View>
+        <View
+          style={{
+            backgroundColor: 'white'
+        }}
+        >
+          <FlatList
+            style={{
+                    backgroundColor: 'white'
+                  }}
+            data={daysEPG}
+            horizontal={true}
+            renderItem={renderDaysEPGItem}
+            initialScrollIndex={3}
+          />  
+        </View>
+        
+        <Text 
+          style ={{fontWeight: 'bold', margin: 5, fontSize: 16, textAlign: 'center'}} 
+        > 
+         {dateForEPG.toDateString()}  
+        </Text>
+        <FlatList
+          style={{backgroundColor: 'white'}}
+          data={currentEPG}
+          renderItem={renderEPGItem}
+          keyExtractor={(item) => item.ut_start}
+        />
+      </View>
         </View>
         
     )
