@@ -72,39 +72,7 @@ const ChannelPlayer = ({route, navigation}) => {
             });
     },[dateForEPG]);
 
-    // const renderEPGItem = ({item}) => <View
-    //                                     style={{
-    //                                       flex: 1,
-    //                                       flexDirection: 'row',
-    //                                       margin: 5,
-    //                                       borderWidth: 1,
-    //                                       borderColor: '#b0b0b0',
-    //                                     }}
-    //                                   >
-    //                                     <Text 
-    //                                       style ={{fontSize: 16,
-    //                                         textAlign: 'center',
-    //                                         margin: 5,
-    //                                         fontWeight: 'bold',
-    //                                       }} 
-    //                                     > 
-    //                                       {item.t_start} 
-    //                                     </Text>
-    //                                     <View
-    //                                       style={{
-    //                                         flex: 1,
-    //                                       }}
-    //                                     >
-    //                                       <Text 
-    //                                         style ={{fontSize: 16,
-    //                                           margin: 5,
-    //                                         }}  
-    //                                       > 
-    //                                         {item.progname} 
-    //                                       </Text>
-    //                                     </View>
-                                        
-    //                                   </View>
+
     const renderDaysEPGItem = ({item}) => <View
                                                 style={{
                                                 flex: 1,
@@ -133,11 +101,7 @@ const ChannelPlayer = ({route, navigation}) => {
 
     const renderEPGItem = ({item}) => <TouchableOpacity 
                                         onPress={async () => {
-                                          // console.log("Select Epg", item.t_start, item.ut_start, item.progname)
                                           let videoUrl = await getUrl(channel.id + "&gmt=" + item.ut_start);
-                                          // console.log("VideoUrl =", videoUrl);
-                                          // setPcode(code);
-                                            //   videoUrl = videoUrl + ".m3u8";
                                               navigation.navigate("Channel Player", {
                                                   url: videoUrl,
                                                   channel: channel,
